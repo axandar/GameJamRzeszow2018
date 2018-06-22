@@ -252,7 +252,7 @@ public class PlayerCar : MonoBehaviour
     {
         ClearEffects();
 
-        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
         switch (effectLevel)
         {
             case 1:
@@ -277,7 +277,7 @@ public class PlayerCar : MonoBehaviour
 
         isImmortal = true;
 
-        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
         switch (effectLevel)
         {
             case 1:
@@ -294,11 +294,22 @@ public class PlayerCar : MonoBehaviour
         }
     }
 
-    public void Explosion()
+    public void Explosion(int effectID)
     {
         ClearEffects();
 
-        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        int effectLevel = 0;
+
+        switch(effectID) {
+            case SloikEffectController.EFFECT_EXPLOSION_CIRCLE:
+                effectLevel = UpgradeManager.instance.upgradeLevelBigos;
+                break;
+            case SloikEffectController.EFFECT_EXPLOSION_LINES:
+                effectLevel = UpgradeManager.instance.upgradeLevelMeksyk;
+                break;
+
+        }
+
         switch (effectLevel)
         {
             case 1:
@@ -324,7 +335,7 @@ public class PlayerCar : MonoBehaviour
     {
         ClearEffects();
 
-        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLevelLazanki;
         switch (effectLevel)
         {
             case 1:

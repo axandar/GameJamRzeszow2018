@@ -15,7 +15,8 @@ public class EnemyControler : MonoBehaviour
 
     private int screenWidth;
     private EnemyManager enemyManager;
-    private Rigidbody2D _rb;
+    private PlayerCar playerCar;
+    private Rigidbody2D rigidBody;
 
     //Effects
     private float effectWearOff = 0f;
@@ -25,11 +26,12 @@ public class EnemyControler : MonoBehaviour
 
     private void Start() {
         enemyManager = FindObjectOfType<EnemyManager>();
+        playerCar = FindObjectOfType<PlayerCar>();
     }
 
     private void Awake()
     {
-        _rb = _rb ?? GetComponent<Rigidbody2D>();
+        rigidBody = rigidBody ?? GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -40,8 +42,8 @@ public class EnemyControler : MonoBehaviour
 
         if (transform.position.x > 15f)
         {
-            FindObjectOfType<PlayerCar>().TakeHeart(1);
-            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+            playerCar.TakeHeart(1);
+            enemyManager.spawnedEnemies.Remove(this);
             Destroy(gameObject);
         }
     }
@@ -49,7 +51,7 @@ public class EnemyControler : MonoBehaviour
     private void DriveForward()
     {
         float actualEnemySpeed = speed + enemyManager.speedUpValue;
-        _rb.MovePosition(new Vector3(
+        rigidBody.MovePosition(new Vector3(
             transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * actualEnemySpeed,
             transform.position.y,
             0f));
@@ -103,7 +105,7 @@ public class EnemyControler : MonoBehaviour
     {
         ClearEffects();
 
-        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
         switch (effectLevel)
         {
             case 1:
@@ -119,6 +121,8 @@ public class EnemyControler : MonoBehaviour
                 break;
         }
 
+        slowDownValue *= -1;//grochowa powinna przyspieszac przeciwnikow
+
         effectWearOff = 3;
     }
 
@@ -128,7 +132,7 @@ public class EnemyControler : MonoBehaviour
 
         isImmortal = true;
 
-        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
         switch (effectLevel)
         {
             case 1:
