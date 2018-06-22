@@ -18,6 +18,18 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public int upgradeLevelParowki = 0;
     public int upgradeLevelMeksyk = 0;
 
+    public bool RemoveCoins(int amount)
+    {
+        if (Mathf.Abs(amount) > coins)
+        {
+            Debug.Log("You can't afford that!");
+            return false;
+        }
+
+        coins -= Mathf.Abs(amount);
+        return true;
+    }
+
     public void AddCoins(int amount)
     {
         coins += Mathf.Abs(amount);

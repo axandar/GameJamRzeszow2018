@@ -9,6 +9,7 @@ public class PlayerCar : MonoBehaviour
     public KeyCode lineUp = KeyCode.W;
     public KeyCode lineDown = KeyCode.S;
     private float mid = 0.25f;
+    private float startPos = 15f;
 
     public float[] lanes = new float[] {
         5.25f,
@@ -24,18 +25,18 @@ public class PlayerCar : MonoBehaviour
     {
         hitsLeft = UpgradeManager.instance.playerLives + UpgradeManager.instance.upgradeLivesLevel;
 
-        transform.position = new Vector3(-15f, transform.position.y, transform.position.z);
+        transform.position = new Vector3(-startPos, transform.position.y, transform.position.z);
         StartCoroutine(PlayerSlideIn());
     }
 
     public IEnumerator PlayerSlideOut()
     {
         Vector3 pos = transform.position;
-        pos.x = Mathf.MoveTowards(pos.x, 15f, Time.deltaTime * 6f);
+        pos.x = Mathf.MoveTowards(pos.x, startPos, Time.deltaTime * 6f);
         transform.position = pos;
 
         yield return null;
-        if (transform.position.x < 15f)
+        if (transform.position.x < startPos)
         {
             StartCoroutine(PlayerSlideOut());
         }
@@ -87,12 +88,12 @@ public class PlayerCar : MonoBehaviour
     {
         Vector3 pos = transform.position;
 
-        pos.x = Mathf.MoveTowards(pos.x, -15f, Time.deltaTime * 5f * FindObjectOfType<MovingRoad>()._currSpeed);
+        pos.x = Mathf.MoveTowards(pos.x, -startPos, Time.deltaTime * 5f * FindObjectOfType<MovingRoad>()._currSpeed);
         transform.position = pos;
 
         yield return null;
 
-        if (transform.position.x > -15f)
+        if (transform.position.x > -startPos)
         {
             StartCoroutine(CrashRoutine());
         }
@@ -134,7 +135,7 @@ public class PlayerCar : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.O))
                 {
                     Vector3 pos = transform.position;
-                    pos.x = -15f;
+                    pos.x = -startPos;
                     transform.position = pos;
                     StartCoroutine(PlayerSlideIn());
                 }
