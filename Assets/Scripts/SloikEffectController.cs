@@ -13,9 +13,8 @@ public class SloikEffectController : MonoBehaviour {
     public const int EFFECT_INSTANT_KILL = 7;
     public const int EFFECT_EXPLOSION_LINES = 8;
 
-    public int Effect;
-    public float Duration;
-    public int EffectLevel;
+    public int effect;
+    public float duration;
 
 	// Use this for initialization
 	void Start () {
@@ -28,15 +27,15 @@ public class SloikEffectController : MonoBehaviour {
 	}
 
     void EffectWearOff() {
-        Duration -= Time.deltaTime;
+        duration -= Time.deltaTime;
 
-        if(Duration <= 0) {
+        if(duration <= 0) {
             Destroy(gameObject);
         }
     }
 
     void OnCollisionEnter(Collision col) {
-        if(col.gameObject.name == "Ałto") {
+        if(col.gameObject.name != "Ałto") {
             EnemyControler enemyController = gameObject.GetComponent<EnemyControler>();
             OnEnemyContact(enemyController);
         } else {
@@ -46,66 +45,66 @@ public class SloikEffectController : MonoBehaviour {
     }
     
     void OnEnemyContact(EnemyControler enemyControler) {
-        switch(Effect) {
+        switch(effect) {
             case EFFECT_SLOW:
-                enemyControler.Slow(EffectLevel);
+                enemyControler.Slow();
                 break;
             case EFFECT_BIRD:
-                enemyControler.Bird(EffectLevel);
+                enemyControler.Bird();
                 break;
             case EFFECT_EXPLOSION_CIRCLE:
-                enemyControler.Explosion(EffectLevel);
+                enemyControler.Explosion();
                 break;
             case EFFECT_IMMORTAL:
-                enemyControler.Immortal(EffectLevel);
+                enemyControler.Immortal();
                 break;
             case EFFECT_RANDOM:
-                Effect = GetRandomEffect();
+                effect = GetRandomEffect();
                 OnEnemyContact(enemyControler);
                 break;
             case EFFECT_LIFE_UP:
-                enemyControler.LifeUp(EffectLevel);
+                enemyControler.LifeUp();
                 break;
             case EFFECT_INSTANT_KILL:
-                enemyControler.InstatKill(EffectLevel);
+                enemyControler.InstatKill();
                 break;
             case EFFECT_EXPLOSION_LINES:
-                enemyControler.Explosion(EffectLevel);
+                enemyControler.Explosion();
                 break;
         }
     }
 
     void OnPlayerContact(PlayerCar playerController) {
-        switch(Effect) {
+        switch(effect) {
             case EFFECT_SLOW:
-                playerController.Slow(EffectLevel);
+                playerController.Slow();
                 break;
             case EFFECT_BIRD:
-                playerController.Bird(EffectLevel);
+                playerController.Bird();
                 break;
             case EFFECT_EXPLOSION_CIRCLE:
-                playerController.Explosion(EffectLevel);
+                playerController.Explosion();
                 break;
             case EFFECT_IMMORTAL:
-                playerController.Immortal(EffectLevel);
+                playerController.Immortal();
                 break;
             case EFFECT_RANDOM:
-                Effect = GetRandomEffect();
+                effect = GetRandomEffect();
                 OnPlayerContact(playerController);
                 break;
             case EFFECT_LIFE_UP:
-                playerController.LifeUp(EffectLevel);
+                playerController.LifeUp();
                 break;
             case EFFECT_INSTANT_KILL:
-                playerController.InstatKill(EffectLevel);
+                playerController.InstatKill();
                 break;
             case EFFECT_EXPLOSION_LINES:
-                playerController.Explosion(EffectLevel);
+                playerController.Explosion();
                 break;
         }
     }
 
     private int GetRandomEffect() {
-        return 3;// nie moze zwracac EFFECT_RANDOM
+        return (int)Random.Range(0.0f, 1.0f)*10;
     }
 }
