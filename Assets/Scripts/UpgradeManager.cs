@@ -18,6 +18,16 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public int upgradeLevelParowki = 0;
     public int upgradeLevelMeksyk = 0;
 
+    private const string livesUpgrade = "livesUpgrade";
+    private const string golabkiUpgrade = "golabkiUpgrade";
+    private const string grochowkaUpgrade = "grochowkaUpgrade";
+    private const string bigosUpgrade = "bigosUpgrade";
+    private const string schabowyUpgrade = "schabowyUpgrade";
+    private const string mixUpgrade = "mixUpgrade";
+    private const string lazankiUpgrade = "lazankiUpgrade";
+    private const string parowkiUpgrade = "parowkiUpgrade";
+    private const string meksykUpgrade = "meksykUpgrade";
+
     public bool RemoveCoins(int amount)
     {
         if (Mathf.Abs(amount) > coins)
@@ -54,6 +64,28 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
     public void LoadUpgrades()
     {
-        //Todo read from saved game
+        upgradeLivesLevel = PlayerPrefs.GetInt(livesUpgrade, 0);
+
+        upgradeLevelGolabki = PlayerPrefs.GetInt(golabkiUpgrade, 0);
+        upgradeLevelGrochowka = PlayerPrefs.GetInt(grochowkaUpgrade, 0);
+        upgradeLevelBigos = PlayerPrefs.GetInt(bigosUpgrade, 0);
+        upgradeLevelSchabowy = PlayerPrefs.GetInt(schabowyUpgrade, 0);
+        upgradeLevelMix = PlayerPrefs.GetInt(mixUpgrade, 0);
+        upgradeLevelLazanki = PlayerPrefs.GetInt(lazankiUpgrade, 0);
+        upgradeLevelParowki = PlayerPrefs.GetInt(parowkiUpgrade, 0);
+        upgradeLevelMeksyk = PlayerPrefs.GetInt(meksykUpgrade, 0);
+    }
+
+    public void SaveUpgrades()
+    {
+        PlayerPrefs.SetInt(livesUpgrade, upgradeLivesLevel);
+
+        PlayerPrefs.SetInt(golabkiUpgrade, upgradeLevelGolabki);
+        PlayerPrefs.SetInt(grochowkaUpgrade, upgradeLevelGrochowka);
+        PlayerPrefs.SetInt(bigosUpgrade, upgradeLevelBigos);
+        PlayerPrefs.SetInt(mixUpgrade, upgradeLevelMix);
+        PlayerPrefs.SetInt(lazankiUpgrade, upgradeLevelLazanki);
+        PlayerPrefs.SetInt(parowkiUpgrade, upgradeLevelParowki);
+        PlayerPrefs.SetInt(meksykUpgrade, upgradeLevelMeksyk);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCar : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class PlayerCar : MonoBehaviour
     public KeyCode lineDown = KeyCode.S;
     private float mid = 0.25f;
     private float startPos = 15f;
+
+    public Image[] hearts;
+
+    public Sprite lostHeart;
+    public Sprite heart;
 
     public float[] lanes = new float[] {
         5.25f,
@@ -21,9 +27,21 @@ public class PlayerCar : MonoBehaviour
 
     public int currLane = 2;
 
+    private bool _crashed = false;
+
     public void Start()
     {
+        UpgradeManager.instance.LoadUpgrades();
+
         hitsLeft = UpgradeManager.instance.playerLives + UpgradeManager.instance.upgradeLivesLevel;
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (hitsLeft <= i)
+            {
+                hearts[i].enabled = false;
+            }
+        }
 
         transform.position = new Vector3(-startPos, transform.position.y, transform.position.z);
         StartCoroutine(PlayerSlideIn());
@@ -144,6 +162,28 @@ public class PlayerCar : MonoBehaviour
                 {
                     Crashed();
                 }
+
+                if (Input.GetKeyDown(KeyCode.KeypadPlus))
+                {
+                    hitsLeft++;
+                }
+
+                if (Input.GetKeyDown(KeyCode.KeypadMinus))
+                {
+                    hitsLeft--;
+                }
+            }
+
+            Vector3 playerpos = transform.position;
+            playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
+            transform.position = playerpos;
+        }
+        else
+        {
+            if (!_crashed)
+            {
+                _crashed = true;
+                Crashed();
             }
         }
 
@@ -157,32 +197,42 @@ public class PlayerCar : MonoBehaviour
             currLane = 4;
         }
 
-        Vector3 playerpos = transform.position;
-        playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
-        transform.position = playerpos;
+        for (int i = 0; i < 5; i++)
+        {
+            if (hitsLeft <= i)
+            {
+                hearts[i].sprite = lostHeart;
+            }
+            else
+            {
+                hearts[i].sprite = heart;
+            }
+        }
     }
 
-    public void Slow(int effectLevel) {
-
+    public void Slow(int effectLevel)
+    {
     }
 
-    public void Immortal(int effectLevel) {
-
+    public void Immortal(int effectLevel)
+    {
     }
 
-    public void Explosion(int effectLevel) {
-
+    public void Explosion(int effectLevel)
+    {
     }
 
-    public void Bird(int effectLevel) {
+    public void Bird(int effectLevel)
+    {
         return;//no effect
     }
 
-    public void LifeUp(int effectLevel) {
-
+    public void LifeUp(int effectLevel)
+    {
     }
 
-    public void InstatKill(int effectLevel) {
+    public void InstatKill(int effectLevel)
+    {
         Crashed();
     }
 }
