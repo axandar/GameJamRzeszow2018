@@ -15,11 +15,6 @@ public class SloikEffectController : MonoBehaviour {
 
     public int effect;
     public float duration;
-
-	// Use this for initialization
-	void Start () {
-		//todo nadawac wielkosc collidera i sprite'a
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,6 +28,8 @@ public class SloikEffectController : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+    public void SetColliderSize(float x, float y, ) { }
 
     void OnCollisionEnter(Collision col) {
         if(col.gameObject.name != "Ałto") {
