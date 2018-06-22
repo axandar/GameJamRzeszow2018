@@ -64,6 +64,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
     public void LoadUpgrades()
     {
+        coins = PlayerPrefs.GetInt("coins");
         upgradeLivesLevel = PlayerPrefs.GetInt(livesUpgrade, 0);
 
         upgradeLevelGolabki = PlayerPrefs.GetInt(golabkiUpgrade, 0);
@@ -78,6 +79,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
     public void SaveUpgrades()
     {
+        PlayerPrefs.SetInt("coins", coins);
         PlayerPrefs.SetInt(livesUpgrade, upgradeLivesLevel);
 
         PlayerPrefs.SetInt(golabkiUpgrade, upgradeLevelGolabki);

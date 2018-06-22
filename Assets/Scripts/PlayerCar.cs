@@ -49,6 +49,8 @@ public class PlayerCar : MonoBehaviour
 
     public IEnumerator PlayerSlideOut()
     {
+        GameManager.instance.inGame = false;
+
         Vector3 pos = transform.position;
         pos.x = Mathf.MoveTowards(pos.x, startPos, Time.deltaTime * 6f);
         transform.position = pos;
@@ -87,6 +89,7 @@ public class PlayerCar : MonoBehaviour
     private void OnPlayerSlidedIn()
     {
         Debug.Log("OnPlayerSlidedIn()");
+        GameManager.instance.inGame = true;
     }
 
     //called when slide out finishes
@@ -99,6 +102,8 @@ public class PlayerCar : MonoBehaviour
     {
         hitsLeft = -1;
         FindObjectOfType<MovingRoad>().slowdown = true;
+        GameManager.instance.inGame = false;
+
         StartCoroutine(CrashRoutine());
     }
 
@@ -125,6 +130,7 @@ public class PlayerCar : MonoBehaviour
     public void OnCrashed()
     {
         Debug.Log("OnCrashed()");
+        UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
     }
 
     public void Update()
@@ -132,6 +138,10 @@ public class PlayerCar : MonoBehaviour
         if (alive)
         {
             PlayerAliveLogic();
+            if (GameManager.instance.inGame)
+            {
+                GameManager.instance.points++;
+            }
         }
         else
         {
@@ -145,40 +155,49 @@ public class PlayerCar : MonoBehaviour
         CheckHearts();
     }
 
-    private void PlayerAliveLogic() {
-        if(Input.GetKeyDown(lineUp)) {
+    private void PlayerAliveLogic()
+    {
+        if (Input.GetKeyDown(lineUp))
+        {
             currLane--;
         }
-        if(Input.GetKeyDown(lineDown)) {
+        if (Input.GetKeyDown(lineDown))
+        {
             currLane++;
         }
 
         CheckLineInBounds();
 
-        if(GameManager.instance.DEBUG) {
-            if(Input.GetKeyDown(KeyCode.P)) {
+        if (GameManager.instance.DEBUG)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
                 Vector3 pos = transform.position;
                 pos.x = mid;
                 transform.position = pos;
                 StartCoroutine(PlayerSlideOut());
             }
 
-            if(Input.GetKeyDown(KeyCode.O)) {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
                 Vector3 pos = transform.position;
                 pos.x = -startPos;
                 transform.position = pos;
                 StartCoroutine(PlayerSlideIn());
             }
 
-            if(Input.GetKeyDown(KeyCode.I)) {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
                 Crashed();
             }
 
-            if(Input.GetKeyDown(KeyCode.KeypadPlus)) {
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
                 hitsLeft++;
             }
 
-            if(Input.GetKeyDown(KeyCode.KeypadMinus)) {
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
                 hitsLeft--;
             }
         }
@@ -188,21 +207,29 @@ public class PlayerCar : MonoBehaviour
         transform.position = playerpos;
     }
 
-    private void CheckLineInBounds() {
-        if(currLane <= 0) {
+    private void CheckLineInBounds()
+    {
+        if (currLane <= 0)
+        {
             currLane = 0;
         }
 
-        if(currLane >= 4) {
+        if (currLane >= 4)
+        {
             currLane = 4;
         }
     }
 
-    private void CheckHearts() {
-        for(int i = 0; i < 5; i++) {
-            if(hitsLeft <= i) {
+    private void CheckHearts()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (hitsLeft <= i)
+            {
                 hearts[i].sprite = lostHeart;
-            } else {
+            }
+            else
+            {
                 hearts[i].sprite = heart;
             }
         }
