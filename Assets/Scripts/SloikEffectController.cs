@@ -11,6 +11,9 @@ public class SloikEffectController : MonoBehaviour {
     public const int EFFECT_RANDOM = 5;
 
     public int Effect;
+
+    public 
+
 	// Use this for initialization
 	void Start () {
 		
@@ -21,25 +24,36 @@ public class SloikEffectController : MonoBehaviour {
         
 	}
 
-    //EFFECT_BIRD no effect on player
-    void OnContact() {
+    void OnCollisionEnter(Collision col) {
+        OnContact(col.gameObject);
+    }
+    
+    void OnContact(GameObject gameObject) {
         switch(Effect) {
             case EFFECT_SLOW:
                 break;
             case EFFECT_BIRD:
+                if(gameObject.name != "Ałto") {
+                    Kill(gameObject);
+                }
                 break;
             case EFFECT_EXPLOSION:
+                Kill(gameObject);
                 break;
             case EFFECT_IMMORTAL:
                 break;
             case EFFECT_RANDOM:
                 Effect = GetRandomEffect();
-                OnContact();
+                OnContact(gameObject);
                 break;
         }
     }
 
     private int GetRandomEffect() {
         return 3;// nie moze zwracac EFFECT_RANDOM
+    }
+
+    private void Kill(GameObject gameObject) {
+        Destroy(gameObject);
     }
 }
