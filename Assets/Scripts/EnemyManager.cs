@@ -8,6 +8,11 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject enemyPrefab;
 
+    public GameObject narrowRoadUp;
+    public GameObject narrowRoadDown;
+
+    public GameObject roadWorks;
+
     public float[] lanes = new float[] {
         5.25f,
         3.1f,
