@@ -43,6 +43,11 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public void AddCoins(int amount)
     {
         coins += Mathf.Abs(amount);
+        if (GameManager.instance.inGame)
+        {
+            GameManager.instance.points += 100;
+        }
+
         Debug.Log("Added " + amount + "coins. Now having " + coins);
     }
 
