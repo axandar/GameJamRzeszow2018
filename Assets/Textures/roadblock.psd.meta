@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 0e811e49cb4f0644c823ceed3eba7464
+=======
+guid: 7817bcfcc0432f0469e79e082c41384e
+>>>>>>> Michal
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
