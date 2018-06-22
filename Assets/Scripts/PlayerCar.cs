@@ -17,6 +17,11 @@ public class PlayerCar : MonoBehaviour
     public Sprite lostHeart;
     public Sprite heart;
 
+    //Effects
+    private float effectWearOff = 0f;
+    private bool isImmortal = false;
+    private int slowDownValue = 0;
+
     public float[] lanes = new float[] {
         5.25f,
         3.1f,
@@ -24,9 +29,7 @@ public class PlayerCar : MonoBehaviour
         -1.1f,
         -3.25f
     };
-
     public int currLane = 2;
-
     private bool _crashed = false;
 
     public void Start()
@@ -235,16 +238,64 @@ public class PlayerCar : MonoBehaviour
         }
     }
 
-    public void Slow()
-    {
+    private void ClearEffects() {
+        isImmortal = false;
+        slowDownValue = 0;
     }
 
-    public void Immortal()
-    {
+    public void Slow(){
+        ClearEffects();
+
+        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        switch(effectLevel) {
+            case 1:
+                slowDownValue = 1;
+                break;
+            case 2:
+                slowDownValue = 2;
+                break;
+            case 3:
+                slowDownValue = 3;
+                break;
+        }
+
+        effectWearOff = 3;
     }
 
-    public void Explosion()
-    {
+    public void Immortal(){
+        ClearEffects();
+
+        isImmortal = true;
+
+        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        switch(effectLevel) {
+            case 1:
+                effectWearOff = 1;
+                break;
+            case 2:
+                effectWearOff = 2;
+                break;
+            case 3:
+                effectWearOff = 3;
+                break;
+        }
+    }
+
+    public void Explosion(){
+        ClearEffects();
+        
+        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        switch(effectLevel) {
+            case 1:
+                TakeHeart(1);
+                break;
+            case 2:
+                TakeHeart(2);
+                break;
+            case 3:
+                TakeHeart(3);
+                break;
+        }
     }
 
     public void Bird()
@@ -252,12 +303,35 @@ public class PlayerCar : MonoBehaviour
         return;//no effect
     }
 
-    public void LifeUp()
-    {
+    public void LifeUp(){
+        ClearEffects();
+
+        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
+        switch(effectLevel) {
+            case 1:
+                AddHeart(1);
+                break;
+            case 2:
+                AddHeart(2);
+                break;
+            case 3:
+              AddHeart(3);
+                break;
+        }
     }
 
     public void InstatKill()
     {
-        Crashed();
+        ClearEffects();
+        TakeHeart(hitsLeft);
+    }
+
+    private void AddHeart(int number) {
+        hitsLeft += number;
+    }
+
+    private void TakeHeart(int number) {
+        hitsLeft -= number;
+        
     }
 }

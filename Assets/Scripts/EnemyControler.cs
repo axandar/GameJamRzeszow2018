@@ -20,7 +20,6 @@ public class EnemyControler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
         transform = GetComponent<Transform>();
         SetStartingPosition();
 	}
