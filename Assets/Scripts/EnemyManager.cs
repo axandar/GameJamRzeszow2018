@@ -16,7 +16,14 @@ public class EnemyManager : MonoBehaviour
         -3.25f
     };
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(int lane)
     {
+        if (lane > 5 || lane < 0)
+        {
+            return;
+        }
+
+        GameObject e = Instantiate(enemyPrefab, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
+        spawnedEnemies.Add(e.GetComponent<EnemyControler>());
     }
 }
