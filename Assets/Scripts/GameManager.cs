@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int playerLives = 3;
-    public bool DEBUG = true;
+    public bool DEBUG { get { return Application.platform == RuntimePlatform.WindowsEditor; } }
 }

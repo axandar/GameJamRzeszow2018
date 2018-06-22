@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/RoadGame.unity
+    guid: 48e9185cdcc3ac74e8de8f9d267e510b
   m_configObjects: {}
