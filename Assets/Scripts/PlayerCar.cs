@@ -131,52 +131,7 @@ public class PlayerCar : MonoBehaviour
     {
         if (alive)
         {
-            if (Input.GetKeyDown(lineUp))
-            {
-                currLane--;
-            }
-            if (Input.GetKeyDown(lineDown))
-            {
-                currLane++;
-            }
-
-            if (GameManager.instance.DEBUG)
-            {
-                if (Input.GetKeyDown(KeyCode.P))
-                {
-                    Vector3 pos = transform.position;
-                    pos.x = mid;
-                    transform.position = pos;
-                    StartCoroutine(PlayerSlideOut());
-                }
-
-                if (Input.GetKeyDown(KeyCode.O))
-                {
-                    Vector3 pos = transform.position;
-                    pos.x = -startPos;
-                    transform.position = pos;
-                    StartCoroutine(PlayerSlideIn());
-                }
-
-                if (Input.GetKeyDown(KeyCode.I))
-                {
-                    Crashed();
-                }
-
-                if (Input.GetKeyDown(KeyCode.KeypadPlus))
-                {
-                    hitsLeft++;
-                }
-
-                if (Input.GetKeyDown(KeyCode.KeypadMinus))
-                {
-                    hitsLeft--;
-                }
-            }
-
-            Vector3 playerpos = transform.position;
-            playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
-            transform.position = playerpos;
+            PlayerAliveLogic();
         }
         else
         {
@@ -187,51 +142,94 @@ public class PlayerCar : MonoBehaviour
             }
         }
 
-        if (currLane <= 0)
-        {
+        CheckHearts();
+    }
+
+    private void PlayerAliveLogic() {
+        if(Input.GetKeyDown(lineUp)) {
+            currLane--;
+        }
+        if(Input.GetKeyDown(lineDown)) {
+            currLane++;
+        }
+
+        CheckLineInBounds();
+
+        if(GameManager.instance.DEBUG) {
+            if(Input.GetKeyDown(KeyCode.P)) {
+                Vector3 pos = transform.position;
+                pos.x = mid;
+                transform.position = pos;
+                StartCoroutine(PlayerSlideOut());
+            }
+
+            if(Input.GetKeyDown(KeyCode.O)) {
+                Vector3 pos = transform.position;
+                pos.x = -startPos;
+                transform.position = pos;
+                StartCoroutine(PlayerSlideIn());
+            }
+
+            if(Input.GetKeyDown(KeyCode.I)) {
+                Crashed();
+            }
+
+            if(Input.GetKeyDown(KeyCode.KeypadPlus)) {
+                hitsLeft++;
+            }
+
+            if(Input.GetKeyDown(KeyCode.KeypadMinus)) {
+                hitsLeft--;
+            }
+        }
+
+        Vector3 playerpos = transform.position;
+        playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
+        transform.position = playerpos;
+    }
+
+    private void CheckLineInBounds() {
+        if(currLane <= 0) {
             currLane = 0;
         }
 
-        if (currLane >= 4)
-        {
+        if(currLane >= 4) {
             currLane = 4;
         }
+    }
 
-        for (int i = 0; i < 5; i++)
-        {
-            if (hitsLeft <= i)
-            {
+    private void CheckHearts() {
+        for(int i = 0; i < 5; i++) {
+            if(hitsLeft <= i) {
                 hearts[i].sprite = lostHeart;
-            }
-            else
-            {
+            } else {
                 hearts[i].sprite = heart;
             }
         }
     }
 
-    public void Slow(int effectLevel)
+    public void Slow()
     {
     }
 
-    public void Immortal(int effectLevel)
+    public void Immortal()
     {
     }
 
-    public void Explosion(int effectLevel)
+    public void Explosion()
     {
     }
 
-    public void Bird(int effectLevel)
+    public void Bird()
     {
         return;//no effect
     }
 
-    public void LifeUp(int effectLevel)
+    public void LifeUp()
     {
     }
 
-    public void InstatKill(int effectLevel)
+    public void InstatKill()
     {
         Crashed();
     }
