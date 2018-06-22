@@ -30,7 +30,23 @@ public class EnemyControler : MonoBehaviour {
         transform.Translate(vec * Time.deltaTime);
     }
 
-    void Kill() {
+    public void Kill() {
         isDead = true;
+    }
+
+    public void Slow() {
+
+    }
+
+    public void Immortal() {
+
+    }
+
+    public void Explosion() {
+
+    }
+
+    public void Bird() {
+
     }
 }

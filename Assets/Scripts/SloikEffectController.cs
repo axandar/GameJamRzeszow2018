@@ -12,8 +12,6 @@ public class SloikEffectController : MonoBehaviour {
 
     public int Effect;
 
-    public 
-
 	// Use this for initialization
 	void Start () {
 		
@@ -25,35 +23,32 @@ public class SloikEffectController : MonoBehaviour {
 	}
 
     void OnCollisionEnter(Collision col) {
-        OnContact(col.gameObject);
+        EnemyControler enemyController = (EnemyControler)gameObject.GetComponent(typeof(EnemyControler));
+        OnEnemyContact(enemyController);
     }
     
-    void OnContact(GameObject gameObject) {
+    void OnEnemyContact(EnemyControler enemyControler) {
         switch(Effect) {
             case EFFECT_SLOW:
+                enemyControler.Slow();
                 break;
             case EFFECT_BIRD:
-                if(gameObject.name != "Ałto") {
-                    Kill(gameObject);
-                }
+                enemyControler.Bird();
                 break;
             case EFFECT_EXPLOSION:
-                Kill(gameObject);
+                enemyControler.Explosion();
                 break;
             case EFFECT_IMMORTAL:
+                enemyControler.Immortal();
                 break;
             case EFFECT_RANDOM:
                 Effect = GetRandomEffect();
-                OnContact(gameObject);
+                OnEnemyContact(enemyControler);
                 break;
         }
     }
 
     private int GetRandomEffect() {
         return 3;// nie moze zwracac EFFECT_RANDOM
-    }
-
-    private void Kill(GameObject gameObject) {
-        Destroy(gameObject);
     }
 }
