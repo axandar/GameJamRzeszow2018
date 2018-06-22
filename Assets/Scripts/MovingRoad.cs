@@ -35,10 +35,12 @@ public class MovingRoad : MonoBehaviour {
         if(_currSpeed >= speed)
         {
             _currSpeed = speed;
+            slowup = false;
         }
         if(_currSpeed <= 0f)
         {
             _currSpeed = 0f;
+            slowdown = false;
         }
 
         if(slowdown && _currSpeed > 0f)
