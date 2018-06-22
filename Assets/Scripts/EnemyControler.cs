@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyControler : MonoBehaviour
 {
+
+    //todo dodawac wartosc predkosc z EnemyManager za kazdym refresh
+
     public float speed;
     public int life;
     public bool isDead = false;
@@ -14,7 +17,6 @@ public class EnemyControler : MonoBehaviour
 
     //Effects
     private float effectWearOff = 0f;
-
     private bool isImmortal = false;
     private int slowDownValue = 0;
 

@@ -9,19 +9,9 @@ public class PlayerCar : MonoBehaviour
     public int hitsLeft = 3;
     public KeyCode lineUp = KeyCode.W;
     public KeyCode lineDown = KeyCode.S;
-    private float mid = 0.25f;
-    private float startPos = 15f;
-
     public Image[] hearts;
-
     public Sprite lostHeart;
     public Sprite heart;
-
-    //Effects
-    private float effectWearOff = 0f;
-
-    private bool isImmortal = false;
-
     public float[] lanes = new float[] {
         5.25f,
         3.1f,
@@ -29,12 +19,20 @@ public class PlayerCar : MonoBehaviour
         -1.1f,
         -3.25f
     };
-
     public int currLane = 2;
+
+    private float mid = 0.25f;
+    private float startPos = 15f;
     private bool _crashed = false;
+
+    //Effects
+    private float effectWearOff = 0f;
+    private EnemyManager enemyManager;
+    private bool isImmortal = false;
 
     public void Start()
     {
+        enemyManager = FindObjectOfType<EnemyManager>();
         UpgradeManager.instance.LoadUpgrades();
 
         hitsLeft = UpgradeManager.instance.playerLives + UpgradeManager.instance.upgradeLivesLevel;
@@ -242,13 +240,12 @@ public class PlayerCar : MonoBehaviour
     private void ClearEffects()
     {
         isImmortal = false;
-        slowDownValue = 0;
+        enemyManager.RestoreEnemySpeed();
     }
 
     public void Slow()
     {
         ClearEffects();
-        EnemyManager enemyManager = FindObjectOfType<EnemyManager>();
 
         int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
         switch (effectLevel)
@@ -352,6 +349,8 @@ public class PlayerCar : MonoBehaviour
 
     public void TakeHeart(int number)
     {
-        hitsLeft -= number;
+        if(!isImmortal) {
+            hitsLeft -= number;
+        }
     }
 }
