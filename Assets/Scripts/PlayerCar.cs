@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCar : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class PlayerCar : MonoBehaviour
     public KeyCode lineUp = KeyCode.W;
     public KeyCode lineDown = KeyCode.S;
     private float mid = 0.25f;
+    private float startPos = 15f;
+
+    public Image[] hearts;
+
+    public Sprite lostHeart;
+    public Sprite heart;
 
     public float[] lanes = new float[] {
         5.25f,
@@ -20,22 +27,34 @@ public class PlayerCar : MonoBehaviour
 
     public int currLane = 2;
 
+    private bool _crashed = false;
+
     public void Start()
     {
+        UpgradeManager.instance.LoadUpgrades();
+
         hitsLeft = UpgradeManager.instance.playerLives + UpgradeManager.instance.upgradeLivesLevel;
 
-        transform.position = new Vector3(-15f, transform.position.y, transform.position.z);
+        for (int i = 0; i < 5; i++)
+        {
+            if (hitsLeft <= i)
+            {
+                hearts[i].enabled = false;
+            }
+        }
+
+        transform.position = new Vector3(-startPos, transform.position.y, transform.position.z);
         StartCoroutine(PlayerSlideIn());
     }
 
     public IEnumerator PlayerSlideOut()
     {
         Vector3 pos = transform.position;
-        pos.x = Mathf.MoveTowards(pos.x, 15f, Time.deltaTime * 6f);
+        pos.x = Mathf.MoveTowards(pos.x, startPos, Time.deltaTime * 6f);
         transform.position = pos;
 
         yield return null;
-        if (transform.position.x < 15f)
+        if (transform.position.x < startPos)
         {
             StartCoroutine(PlayerSlideOut());
         }
@@ -87,12 +106,12 @@ public class PlayerCar : MonoBehaviour
     {
         Vector3 pos = transform.position;
 
-        pos.x = Mathf.MoveTowards(pos.x, -15f, Time.deltaTime * 5f * FindObjectOfType<MovingRoad>()._currSpeed);
+        pos.x = Mathf.MoveTowards(pos.x, -startPos, Time.deltaTime * 5f * FindObjectOfType<MovingRoad>()._currSpeed);
         transform.position = pos;
 
         yield return null;
 
-        if (transform.position.x > -15f)
+        if (transform.position.x > -startPos)
         {
             StartCoroutine(CrashRoutine());
         }
@@ -134,7 +153,7 @@ public class PlayerCar : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.O))
                 {
                     Vector3 pos = transform.position;
-                    pos.x = -15f;
+                    pos.x = -startPos;
                     transform.position = pos;
                     StartCoroutine(PlayerSlideIn());
                 }
@@ -143,6 +162,28 @@ public class PlayerCar : MonoBehaviour
                 {
                     Crashed();
                 }
+
+                if (Input.GetKeyDown(KeyCode.KeypadPlus))
+                {
+                    hitsLeft++;
+                }
+
+                if (Input.GetKeyDown(KeyCode.KeypadMinus))
+                {
+                    hitsLeft--;
+                }
+            }
+
+            Vector3 playerpos = transform.position;
+            playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
+            transform.position = playerpos;
+        }
+        else
+        {
+            if (!_crashed)
+            {
+                _crashed = true;
+                Crashed();
             }
         }
 
@@ -156,32 +197,42 @@ public class PlayerCar : MonoBehaviour
             currLane = 4;
         }
 
-        Vector3 playerpos = transform.position;
-        playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
-        transform.position = playerpos;
+        for (int i = 0; i < 5; i++)
+        {
+            if (hitsLeft <= i)
+            {
+                hearts[i].sprite = lostHeart;
+            }
+            else
+            {
+                hearts[i].sprite = heart;
+            }
+        }
     }
 
-    public void Slow(int effectLevel) {
-
+    public void Slow(int effectLevel)
+    {
     }
 
-    public void Immortal(int effectLevel) {
-
+    public void Immortal(int effectLevel)
+    {
     }
 
-    public void Explosion(int effectLevel) {
-
+    public void Explosion(int effectLevel)
+    {
     }
 
-    public void Bird(int effectLevel) {
+    public void Bird(int effectLevel)
+    {
         return;//no effect
     }
 
-    public void LifeUp(int effectLevel) {
-
+    public void LifeUp(int effectLevel)
+    {
     }
 
-    public void InstatKill(int effectLevel) {
+    public void InstatKill(int effectLevel)
+    {
         Crashed();
     }
 }
