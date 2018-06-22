@@ -20,7 +20,6 @@ public class PlayerCar : MonoBehaviour
     //Effects
     private float effectWearOff = 0f;
     private bool isImmortal = false;
-    private int slowDownValue = 0;
 
     public float[] lanes = new float[] {
         5.25f,
@@ -245,19 +244,20 @@ public class PlayerCar : MonoBehaviour
 
     public void Slow(){
         ClearEffects();
+        EnemyManager enemyManager = FindObjectOfType<EnemyManager>();
 
         int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
         switch(effectLevel) {
             case 1:
-                slowDownValue = 1;
+                enemyManager.SpeedUpEnemies(1, 1f);
                 break;
             case 2:
-                slowDownValue = 2;
+                enemyManager.SpeedUpEnemies(2, 2f);
                 break;
             case 3:
-                slowDownValue = 3;
+                enemyManager.SpeedUpEnemies(3, 3f);
                 break;
-        }
+        }   
 
         effectWearOff = 3;
     }

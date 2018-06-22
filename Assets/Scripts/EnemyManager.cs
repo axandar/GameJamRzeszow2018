@@ -26,4 +26,8 @@ public class EnemyManager : MonoBehaviour
         GameObject e = Instantiate(enemyPrefab, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
         spawnedEnemies.Add(e.GetComponent<EnemyControler>());
     }
+
+    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue) {
+
+    }
 }
