@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerCar : MonoBehaviour {
-
+public class PlayerCar : MonoBehaviour
+{
     public bool alive { get { return hitsLeft > 0; } }
     public int hitsLeft = 3;
     public KeyCode lineUp = KeyCode.W;
@@ -27,7 +25,7 @@ public class PlayerCar : MonoBehaviour {
 
     public void Update()
     {
-                if (alive)
+        if (alive)
         {
             if (Input.GetKeyDown(lineUp))
             {
@@ -48,5 +46,9 @@ public class PlayerCar : MonoBehaviour {
         {
             currentPas = 4;
         }
+
+        Vector3 playerpos = transform.position;
+        playerpos.y = Mathf.MoveTowards(transform.position.y, pasy[currentPas], Time.deltaTime * 9f);
+        transform.position = playerpos;
     }
 }
