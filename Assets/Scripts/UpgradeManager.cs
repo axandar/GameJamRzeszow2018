@@ -48,7 +48,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
             GameManager.instance.points += 100;
         }
 
-        Debug.Log("Added " + amount + "coins. Now having " + coins);
+        Debug.Log("Added " + amount + " coins. Now having " + coins);
     }
 
     public int GetUpgradePrice(int level)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class RoadBlock : MonoBehaviour
 {
     public float speed = 5f;
     private Rigidbody2D _rb;
@@ -16,6 +16,7 @@ public class Obstacle : MonoBehaviour
     private void Update()
     {
         _rb.MovePosition(new Vector3(transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * speed, transform.position.y, 0f));
+
         if (transform.position.x < -100f)
         {
             Destroy(gameObject);
@@ -39,6 +40,6 @@ public class Obstacle : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

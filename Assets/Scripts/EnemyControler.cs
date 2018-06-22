@@ -18,9 +18,11 @@ public class EnemyControler : MonoBehaviour
     private bool isImmortal = false;
     private int slowDownValue = 0;
 
-    // Use this for initialization
-    private void Start()
+    private Rigidbody2D _rb;
+
+    private void Awake()
     {
+        _rb = _rb ?? GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -28,12 +30,33 @@ public class EnemyControler : MonoBehaviour
     {
         DriveForward();
         EffectWearOff();
+
+        if (transform.position.x > 15f)
+        {
+            FindObjectOfType<PlayerCar>().TakeHeart(1);
+            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+            Destroy(gameObject);
+        }
     }
 
     private void DriveForward()
     {
-        Vector3 vec = new Vector3(speed - slowDownValue, 0, 0);
-        transform.Translate(vec * Time.deltaTime);
+        _rb.MovePosition(new Vector3(transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * speed, transform.position.y, 0f));
+    }
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name == "Ałto")
+        {
+            col.GetComponent<PlayerCar>().TakeHeart(1);
+            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+            Destroy(gameObject);
+        }
+        if (col.name != "Ałto" && col.name != "Słoik")
+        {
+            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+            Destroy(gameObject);
+        }
     }
 
     private void EffectWearOff()
