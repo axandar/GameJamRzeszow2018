@@ -10,7 +10,6 @@ public class EnemyControler : MonoBehaviour {
     public int coinValue = 1;
 
     private new Transform transform;
-    private UpgradeManager upgradeManager;
     private int screenWidth;
 
     //Effects
@@ -21,7 +20,6 @@ public class EnemyControler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        upgradeManager = UpgradeManager.instance;
 
         transform = GetComponent<Transform>();
         SetStartingPosition();
@@ -57,7 +55,7 @@ public class EnemyControler : MonoBehaviour {
         if(!isImmortal) {
             isDead = true;
             //todo death animation
-            upgradeManager.coins += 1;
+            UpgradeManager.instance.AddCoins(1);
         }
     }
 
@@ -69,7 +67,7 @@ public class EnemyControler : MonoBehaviour {
     public void Slow() {
         ClearEffects();
 
-        int effectLevel = upgradeManager.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
         switch(effectLevel) {
             case 1:
                 slowDownValue = 1;
@@ -90,7 +88,7 @@ public class EnemyControler : MonoBehaviour {
 
         isImmortal = true;
 
-        int effectLevel = upgradeManager.upgradeLivesLevel;
+        int effectLevel = UpgradeManager.instance.upgradeLivesLevel;
         switch(effectLevel) {
             case 1:
                 effectWearOff = 1;
