@@ -26,11 +26,11 @@ public class PlayerCar : MonoBehaviour
     private bool _crashed = false;
 
     //Effects
-    private float effectWearOff = 0f;
+    private float duration = 0f;
     private EnemyManager enemyManager;
     private bool isImmortal = false;
 
-    public void Start()
+    private void Start()
     {
         enemyManager = FindObjectOfType<EnemyManager>();
         UpgradeManager.instance.LoadUpgrades();
@@ -47,6 +47,23 @@ public class PlayerCar : MonoBehaviour
 
         transform.position = new Vector3(-startPos, transform.position.y, transform.position.z);
         StartCoroutine(PlayerSlideIn());
+    }
+
+    private void Update() {
+        if(alive) {
+            PlayerAliveLogic();
+            if(GameManager.instance.inGame) {
+                GameManager.instance.points++;
+            }
+        } else {
+            if(!_crashed) {
+                _crashed = true;
+                Crashed();
+            }
+        }
+
+        CheckHearts();
+        WearOff();
     }
 
     public IEnumerator PlayerSlideOut()
@@ -135,28 +152,6 @@ public class PlayerCar : MonoBehaviour
         UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
     }
 
-    public void Update()
-    {
-        if (alive)
-        {
-            PlayerAliveLogic();
-            if (GameManager.instance.inGame)
-            {
-                GameManager.instance.points++;
-            }
-        }
-        else
-        {
-            if (!_crashed)
-            {
-                _crashed = true;
-                Crashed();
-            }
-        }
-
-        CheckHearts();
-    }
-
     private void PlayerAliveLogic()
     {
         if (Input.GetKeyDown(lineUp))
@@ -243,6 +238,16 @@ public class PlayerCar : MonoBehaviour
         enemyManager.RestoreEnemySpeed();
     }
 
+    private void WearOff() {
+        if(duration > 0) {
+            duration -= Time.deltaTime;
+        } else if(duration < 0) {
+            duration = 0;
+            ClearEffects();
+            enemyManager.RestoreEnemySpeed();
+        }
+    }
+
     public void Slow()
     {
         ClearEffects();
@@ -263,7 +268,7 @@ public class PlayerCar : MonoBehaviour
                 break;
         }   
 
-        effectWearOff = 3;
+        duration = 3;
     }
 
     public void Immortal()
@@ -276,15 +281,15 @@ public class PlayerCar : MonoBehaviour
         switch (effectLevel)
         {
             case 1:
-                effectWearOff = 1;
+                duration = 1;
                 break;
 
             case 2:
-                effectWearOff = 2;
+                duration = 2;
                 break;
 
             case 3:
-                effectWearOff = 3;
+                duration = 3;
                 break;
         }
     }

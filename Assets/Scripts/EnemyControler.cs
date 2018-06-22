@@ -14,13 +14,18 @@ public class EnemyControler : MonoBehaviour
     public int coinValue = 1;
 
     private int screenWidth;
+    private EnemyManager enemyManager;
+    private Rigidbody2D _rb;
 
     //Effects
     private float effectWearOff = 0f;
     private bool isImmortal = false;
     private int slowDownValue = 0;
 
-    private Rigidbody2D _rb;
+
+    private void Start() {
+        enemyManager = FindObjectOfType<EnemyManager>();
+    }
 
     private void Awake()
     {
@@ -43,7 +48,11 @@ public class EnemyControler : MonoBehaviour
 
     private void DriveForward()
     {
-        _rb.MovePosition(new Vector3(transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * speed, transform.position.y, 0f));
+        float actualEnemySpeed = speed + enemyManager.speedUpValue;
+        _rb.MovePosition(new Vector3(
+            transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * actualEnemySpeed,
+            transform.position.y,
+            0f));
     }
 
     public void OnTriggerEnter2D(Collider2D col)

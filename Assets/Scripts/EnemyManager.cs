@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject narrowRoadDown;
     public GameObject roadWorks;
 
-    private float speedUpValue = 0f;
+    public float speedUpValue = 0f;
     private float duration = 0f;
 
     public float[] lanes = new float[] {
