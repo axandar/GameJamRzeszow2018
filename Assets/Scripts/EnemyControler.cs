@@ -34,19 +34,27 @@ public class EnemyControler : MonoBehaviour {
         isDead = true;
     }
 
-    public void Slow() {
+    public void Slow(int effectLevel) {
 
     }
 
-    public void Immortal() {
+    public void Immortal(int effectLevel) {
 
     }
 
-    public void Explosion() {
+    public void Explosion(int effectLevel) {
 
     }
 
-    public void Bird() {
+    public void Bird(int effectLevel) {
 
+    }
+
+    public void LifeUp(int effectLevel) {
+        return;// no effect
+    }
+
+    public void InstatKill(int effectLevel) {
+        Kill();
     }
 }

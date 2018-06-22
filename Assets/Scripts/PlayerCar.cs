@@ -160,4 +160,28 @@ public class PlayerCar : MonoBehaviour
         playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
         transform.position = playerpos;
     }
+
+    public void Slow(int effectLevel) {
+
+    }
+
+    public void Immortal(int effectLevel) {
+
+    }
+
+    public void Explosion(int effectLevel) {
+
+    }
+
+    public void Bird(int effectLevel) {
+        return;//no effect
+    }
+
+    public void LifeUp(int effectLevel) {
+
+    }
+
+    public void InstatKill(int effectLevel) {
+        Crashed();
+    }
 }
