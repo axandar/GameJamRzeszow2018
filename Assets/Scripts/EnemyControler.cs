@@ -87,12 +87,17 @@ public class EnemyControler : MonoBehaviour
 
     public void Kill()
     {
+        Debug.Log("Kill");
         if (!isImmortal)
         {
             isDead = true;
             //todo death animation
             UpgradeManager.instance.AddCoins(1);
+<<<<<<< HEAD
             enemyManager.killPoints.Add(GameManager.instance.points);
+=======
+            Destroy(gameObject);
+>>>>>>> Michal
         }
     }
 
@@ -105,7 +110,7 @@ public class EnemyControler : MonoBehaviour
     public void Slow()
     {
         ClearEffects();
-
+        Debug.Log("Slow");
         int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
         switch (effectLevel)
         {
@@ -136,15 +141,15 @@ public class EnemyControler : MonoBehaviour
         int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
         switch (effectLevel)
         {
-            case 1:
+            case 0:
                 effectWearOff = 1;
                 break;
 
-            case 2:
+            case 1:
                 effectWearOff = 2;
                 break;
 
-            case 3:
+            case 2:
                 effectWearOff = 3;
                 break;
         }
