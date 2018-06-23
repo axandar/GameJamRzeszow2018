@@ -15,12 +15,12 @@ public class SloikEffectController : MonoBehaviour {
 
     public const int TYPE_CIRCLE = 1;
     public const int TYPE_LINE = 2;
-    
+
+    public float roadSpeed = 5f;
     public int effect;
     public float duration = 0;
 
     private Rigidbody2D rigidBody;
-    private bool isBird = false;
 
     private void Awake() {
         rigidBody = rigidBody ?? GetComponent<Rigidbody2D>();
@@ -29,10 +29,6 @@ public class SloikEffectController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         EffectWearOff();
-
-        if(isBird) {
-            MoveBird();
-        }
 	}
 
     private void EffectWearOff() {
@@ -46,8 +42,14 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
-    private void MoveBird() {
-        transform.Translate(Vector3.forward * Time.deltaTime);
+    private void MoveWithRoad() {
+        rigidBody.MovePosition(new Vector3(
+            transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * roadSpeed, 
+            transform.position.y,
+            0f));
+        if(transform.position.x < -100f) {
+            Destroy(gameObject);
+        }
     }
 
     public void SetSloikEffect(int sloikEffect) {
@@ -59,14 +61,10 @@ public class SloikEffectController : MonoBehaviour {
                 SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_BIRD:
-                SetColliderSize(1, 1, TYPE_CIRCLE);
-                isBird = true;
-                float rotation = UnityEngine.Random.Range(0, UpgradeManager.instance.upgradeLevelGolabki);
-                rotation = 360f / rotation;
-                transform.RotateAroundAxis_Z(rotation, 0.1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_EXPLOSION_CIRCLE:
-                SetColliderSize(1, 1, TYPE_CIRCLE);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_IMMORTAL:
                 SetColliderSize(1, 1, TYPE_LINE);
@@ -99,19 +97,18 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D col) {
-        int layer = col.gameObject.layer;
-        if(layer == LayerMask.NameToLayer("Enemy")) {
-            EnemyControler enemyController = col.gameObject.GetComponent<EnemyControler>();
-            OnEnemyContact(enemyController); 
-        } else if(layer == LayerMask.NameToLayer("Player")) {
-            PlayerCar playerControler = col.gameObject.GetComponent<PlayerCar>();
+    void OnCollisionEnter(Collision col) {
+        Debug.Log(col.gameObject.name);
+        if(col.gameObject.name != "Ałto") {
+            EnemyControler enemyController = gameObject.GetComponent<EnemyControler>();
+            OnEnemyContact(enemyController);
+        } else {
+            PlayerCar playerControler = gameObject.GetComponent<PlayerCar>();
             OnPlayerContact(playerControler);
         }
     }
     
     void OnEnemyContact(EnemyControler enemyControler) {
-        Debug.Log(effect);
         switch(effect) {
             case EFFECT_SLOW:
                 enemyControler.Slow();
@@ -164,6 +161,7 @@ public class SloikEffectController : MonoBehaviour {
     }
 
     private int GetRandomEffect() {
-        return UnityEngine.Random.Range(0, 8);
+
+        return (int)(Random.Range(0.0f, 7.0f)*10);
     }
 }
