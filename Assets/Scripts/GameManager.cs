@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public bool DEBUG { get { return Application.platform == RuntimePlatform.WindowsEditor; } }
+    //public bool DEBUG { get { return Application.platform == RuntimePlatform.WindowsEditor; } }
+    public bool DEBUG { get { return true; } }
     public long points = 0;
     public bool inGame = false;
     public float timer = 120f;

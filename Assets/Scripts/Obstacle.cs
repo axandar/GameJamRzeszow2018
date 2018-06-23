@@ -29,8 +29,8 @@ public class Obstacle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col){
         int layer = col.gameObject.layer;
         if (layer == LayerMask.NameToLayer("Player")){
-            col.GetComponent<PlayerCar>().TakeHeart(1);
-            col.GetComponent<PlayerCar>().Immortal();
+            col.gameObject.GetComponent<PlayerCar>().TakeHeart(1);
+            col.gameObject.GetComponent<PlayerCar>().Immortal();
         }else if(layer == LayerMask.NameToLayer("Enemy")){
             col.GetComponent<EnemyControler>().Kill();
             Destroy(gameObject);

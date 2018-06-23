@@ -125,7 +125,6 @@ public class PlayerCar : MonoBehaviour
     //called when slide out finishes
     private void OnPlayerSlidedOut()
     {
-        Debug.Log("OnPlayerSlidedOut()");
         gameOverScreen.Play("GameOverPanel");
         UpgradeManager.instance.SaveUpgrades(); //remove all earned coins
         FindObjectOfType<MovingRoad>().slowdown = true;
@@ -254,7 +253,6 @@ public class PlayerCar : MonoBehaviour
 
     private void ClearEffects()
     {
-        //Debug.Log("Clear");
         isImmortal = false;
         enemyManager.RestoreEnemySpeed();
     }

@@ -66,40 +66,40 @@ public class SloikEffectController:MonoBehaviour {
 
         switch(effect) {
             case EFFECT_SLOW:
-            SetSprite(effectGrochowka);
-            SetSize(1f, 1f);
-            break;
+                SetSprite(effectGrochowka);
+                SetSize(1f, 1f);
+                break;
             case EFFECT_BIRD:
-            SetSprite(effectGolabki);
-            SetSize(1f, 1f);
-            isBird = true;
-            float rotation = UnityEngine.Random.Range(1, UpgradeManager.instance.upgradeLevelGolabki-1);
-            rotation = 360f / rotation;
-            transform.Rotate(new Vector3(0, 0, 45f));
-            break;
+                SetSprite(effectGolabki);
+                SetSize(1f, 1f);
+                isBird = true;
+                float rotation = UnityEngine.Random.Range(1, UpgradeManager.instance.upgradeLevelGolabki-1);
+                rotation = 360f / rotation;
+                transform.Rotate(new Vector3(0, 0, 45f));
+                break;
             case EFFECT_EXPLOSION_CIRCLE:
-            SetSprite(effectBigos);
-            SetSize(1f, 1f);
-            break;
+                SetSprite(effectBigos);
+                SetSize(1f, 1f);
+                break;
             case EFFECT_IMMORTAL:
-            SetSprite(effectSchabowy);
-            SetSize(1f, 1f);
-            break;
+                SetSprite(effectSchabowy);
+                SetSize(1f, 1f);
+                break;
             case EFFECT_RANDOM:
-            SetSloikEffect(GetRandomEffect());
-            break;
+                SetSloikEffect(GetRandomEffect());
+                break;
             case EFFECT_LIFE_UP:
-            SetSprite(effectLazanki);
-            SetSize(1f, 1f);
-            break;
+                SetSprite(effectLazanki);
+                SetSize(1f, 1f);
+                break;
             case EFFECT_INSTANT_KILL:
-            SetSprite(effectParowki);
-            SetSize(1f, 1f);
-            break;
+                SetSprite(effectParowki);
+                SetSize(1f, 1f);
+                break;
             case EFFECT_EXPLOSION_LINES:
-            SetSprite(effectMeksyk);
-            SetSize(1f, 1f);
-            break;
+                SetSprite(effectMeksyk);
+                SetSize(1f, 1f);
+                break;
         }
     }
 
@@ -129,26 +129,26 @@ public class SloikEffectController:MonoBehaviour {
         Debug.Log(effect);
         switch(effect) {
             case EFFECT_SLOW:
-            enemyControler.Slow();
-            break;
+                enemyControler.Slow();
+                break;
             case EFFECT_BIRD:
-            enemyControler.Bird();
-            break;
+                enemyControler.Bird();
+                break;
             case EFFECT_EXPLOSION_CIRCLE:
-            enemyControler.Explosion();
-            break;
+                enemyControler.Explosion();
+                break;
             case EFFECT_IMMORTAL:
-            enemyControler.Immortal();
-            break;
+                enemyControler.Immortal();
+                break;
             case EFFECT_LIFE_UP:
-            enemyControler.LifeUp();
-            break;
+                enemyControler.LifeUp();
+                break;
             case EFFECT_INSTANT_KILL:
-            enemyControler.InstatKill();
-            break;
+                enemyControler.InstatKill();
+                break;
             case EFFECT_EXPLOSION_LINES:
-            enemyControler.Explosion();
-            break;
+                enemyControler.Explosion();
+                break;
         }
     }
 

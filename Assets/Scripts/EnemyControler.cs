@@ -49,8 +49,8 @@ public class EnemyControler:MonoBehaviour {
         DriveForward();
         EffectWearOff();
 
-        if(transform.position.x > 25f) {
-            //playerCar.TakeHeart(1);
+        if(transform.position.x > 14f) {
+            playerCar.TakeHeart(1);
             enemyManager.RemoveEnemyFromList(this);
             Destroy(gameObject);
         }
@@ -90,7 +90,6 @@ public class EnemyControler:MonoBehaviour {
         Debug.Log("Kill");
         if(!isImmortal) {
             isDead = true;
-            //todo death animation
             UpgradeManager.instance.AddCoins(1);
             Destroy(gameObject);
         }
