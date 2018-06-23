@@ -6,16 +6,14 @@ using UnityEngine.UI;
 public class SloikThrow : MonoBehaviour
 {
     public GameObject sloikPrefab;
-    public Outline[] sloikUI;
-
     public float cooldown = 1f;
+    public Image cldIndicator;
+    public int currSloik = 6;
+    public GameObject objectUI;
 
     private float _cooldown = 0f;
-
     private Vector2 mousePos;
-    public Image cldIndicator;
 
-    public int currSloik = 6;
 
     private void Update()
     {
@@ -37,17 +35,7 @@ public class SloikThrow : MonoBehaviour
             currSloik = 0;
         }
 
-        for (int i = 0; i < sloikUI.Length; i++)
-        {
-            if (i == currSloik)
-            {
-                sloikUI[i].enabled = true;
-            }
-            else
-            {
-                sloikUI[i].enabled = false;
-            }
-        }
+        objectUI.GetComponent<UIScript>().ChangetoIndex(currSloik);
 
         if (_cooldown > 0f)
         {
