@@ -8,7 +8,7 @@ public class SloikThrow : MonoBehaviour
 
     private Vector2 mousePos;
 
-    public int currSloik = 6;
+    public int currSloik = 1;
 
     private void Update(){
         if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame){

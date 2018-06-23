@@ -42,7 +42,7 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
-    private void MoveWithRoad() {
+    /*private void MoveWithRoad() {
         rigidBody.MovePosition(new Vector3(
             transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * roadSpeed, 
             transform.position.y,
@@ -50,7 +50,7 @@ public class SloikEffectController : MonoBehaviour {
         if(transform.position.x < -100f) {
             Destroy(gameObject);
         }
-    }
+    }*/
 
     public void SetSloikEffect(int sloikEffect) {
         effect = sloikEffect;
@@ -97,20 +97,22 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision col) {
-        Debug.Log(col.gameObject.name);
-        if(col.gameObject.name != "Ałto") {
-            EnemyControler enemyController = gameObject.GetComponent<EnemyControler>();
-            OnEnemyContact(enemyController);
-        } else {
-            PlayerCar playerControler = gameObject.GetComponent<PlayerCar>();
+    public void OnTriggerEnter2D(Collider2D col) {
+        int layer = col.gameObject.layer;
+        if(layer == LayerMask.NameToLayer("Enemy")) {
+            EnemyControler enemyController = col.gameObject.GetComponent<EnemyControler>();
+            OnEnemyContact(enemyController); 
+        } else if(layer == LayerMask.NameToLayer("Player")) {
+            PlayerCar playerControler = col.gameObject.GetComponent<PlayerCar>();
             OnPlayerContact(playerControler);
         }
     }
     
     void OnEnemyContact(EnemyControler enemyControler) {
+        Debug.Log(effect);
         switch(effect) {
             case EFFECT_SLOW:
+                Debug.Log("Slow");
                 enemyControler.Slow();
                 break;
             case EFFECT_BIRD:

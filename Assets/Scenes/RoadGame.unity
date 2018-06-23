@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 374786490}
   - component: {fileID: 374786491}
   - component: {fileID: 374786492}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: "A\u0142to"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sloikPrefab: {fileID: 1065122756295114, guid: f49552825d7ec664cb71b40a557903cf,
     type: 2}
-  currSloik: 6
+  currSloik: 1
 --- !u!1 &570866119
 GameObject:
   m_ObjectHideFlags: 0

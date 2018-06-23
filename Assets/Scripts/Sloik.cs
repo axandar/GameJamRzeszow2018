@@ -8,7 +8,7 @@ public class Sloik : MonoBehaviour
     public float rotateSpeed = 350f;
     public float flySpeed = 25f;
 
-    public int type = 6;
+    public int type;
     public Vector2 target = new Vector2();
     public Vector2 initialPos;
 
@@ -92,7 +92,7 @@ public class Sloik : MonoBehaviour
     private Sprite GetSloikFromType(int type)
     {
         switch (type)
-        {
+        {//todo uzywanie const z SloikEffectCController
             case 0:
                 return sloikGolabki;
 
