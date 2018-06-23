@@ -82,7 +82,7 @@ public class Sloik : MonoBehaviour
                     birdsNumber = 4;
                     break;
             }
-
+            Debug.Log(birdsNumber);
             for(int i = 0; i < birdsNumber; i++) {
                 GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
                 SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
