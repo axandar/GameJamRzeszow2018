@@ -8,7 +8,12 @@ public class SloikThrow : MonoBehaviour
     public GameObject sloikPrefab;
     public Outline[] sloikUI;
 
+    public float cooldown = 1f;
+
+    private float _cooldown = 0f;
+
     private Vector2 mousePos;
+    public Image cldIndicator;
 
     public int currSloik = 6;
 
@@ -44,8 +49,15 @@ public class SloikThrow : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame)
+        if (_cooldown > 0f)
         {
+            _cooldown -= Time.deltaTime;
+            cldIndicator.fillAmount = _cooldown / cooldown;
+        }
+        if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame && _cooldown <= 0f)
+        {
+            _cooldown = cooldown;
+
             mousePos = Input.mousePosition;
             GameObject sloik = Instantiate(sloikPrefab, transform.position, Quaternion.identity);
             Sloik sloikComponent = sloik.GetComponent<Sloik>();
