@@ -34,9 +34,16 @@ public class Obstacle : MonoBehaviour
             if (col.name == "Enemy")
             {
                 //col.GetComponent<EnemyControler>().Kill();
+                Destroy(gameObject);
             }
         }
 
-        Destroy(gameObject);
+        if (col.GetComponent<SloikEffectController>() != null)
+        {
+            if (col.GetComponent<SloikEffectController>().effect != 5) //lazanki
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
