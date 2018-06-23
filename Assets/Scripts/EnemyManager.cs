@@ -6,9 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     public List<EnemyControler> spawnedEnemies = new List<EnemyControler>();
     public GameObject enemyPrefab;
-    public GameObject narrowRoadUp;
-    public GameObject narrowRoadDown;
-    public GameObject roadWorks;
+    public GameObject karetkaCar;
 
     public float speedUpValue = 0f;
     private float duration = 0f;
@@ -21,6 +19,15 @@ public class EnemyManager : MonoBehaviour
         -3.25f
     };
 
+    public void SpawnKaretka(int lane)
+    {
+        if (lane > 5 || lane < 0)
+        {
+            return;
+        }
+        GameObject e = Instantiate(karetkaCar, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
+    }
+
     public void SpawnEnemy(int lane)
     {
         if (lane > 5 || lane < 0)
@@ -31,28 +38,35 @@ public class EnemyManager : MonoBehaviour
         //todo ustawianie zmiennych w enemyPrefab
 
         GameObject e = Instantiate(enemyPrefab, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
-        spawnedEnemies.Add(e.GetComponent<EnemyControler>());
+        //spawnedEnemies.Add(e.GetComponent<EnemyControler>());
     }
 
-    void Update() {
+    private void Update()
+    {
         WearOff();
     }
 
-    private void WearOff() {
-        if(duration > 0) {
+    private void WearOff()
+    {
+        if (duration > 0)
+        {
             duration -= Time.deltaTime;
-        } else if(duration < 0) {
+        }
+        else if (duration < 0)
+        {
             duration = 0;
             speedUpValue = 0;
         }
     }
 
-    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue) {
+    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue)
+    {
         speedUpValue = addedSpeedValue;
         duration = wearOffValue;
     }
 
-    public void RestoreEnemySpeed() {
+    public void RestoreEnemySpeed()
+    {
         speedUpValue = 0;
         duration = 0;
     }

@@ -67,12 +67,13 @@ public class Sloik : MonoBehaviour
     {
         //spawn effect
 
-
         Vector3 actualPosition = gameObject.transform.position;
-        GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-        SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-        effectController.SetSloikEffect(type);
-
+        if (sloikEffectPrefab != null)
+        {
+            GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+            SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+            effectController.SetSloikEffect(type);
+        }
         Destroy(gameObject);
     }
 
