@@ -50,24 +50,21 @@ public class EnemyControler : MonoBehaviour
 
     private void DriveForward()
     {
-        float actualEnemySpeed = speed + enemyManager.speedUpValue;
+        float actualEnemySpeed = speed + enemyManager.speedUpValue - slowDownValue;
         rigidBody.MovePosition(new Vector3(
             transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * actualEnemySpeed,
             transform.position.y,
             0f));
     }
 
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.name == "Ałto")
-        {
+    public void OnTriggerEnter2D(Collider2D col) {
+        int layer = col.gameObject.layer;
+        if (layer == LayerMask.NameToLayer("Player")) {
             col.GetComponent<PlayerCar>().TakeHeart(1);
-            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+            enemyManager.spawnedEnemies.Remove(this);
             Destroy(gameObject);
-        }
-        if (col.name != "Ałto" && col.name != "Słoik")
-        {
-            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+        }if (layer == LayerMask.NameToLayer("Enemy") || layer == LayerMask.NameToLayer("Obstacle")) {
+            enemyManager.spawnedEnemies.Remove(this);
             Destroy(gameObject);
         }
     }
@@ -108,20 +105,18 @@ public class EnemyControler : MonoBehaviour
         int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
         switch (effectLevel)
         {
-            case 1:
+            case 0:
                 slowDownValue = 1;
                 break;
 
-            case 2:
+            case 1:
                 slowDownValue = 2;
                 break;
 
-            case 3:
+            case 2:
                 slowDownValue = 3;
                 break;
         }
-
-        slowDownValue *= -1;//grochowa powinna przyspieszac przeciwnikow
 
         effectWearOff = 3;
     }
