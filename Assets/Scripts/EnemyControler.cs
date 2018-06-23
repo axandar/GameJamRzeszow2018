@@ -92,6 +92,7 @@ public class EnemyControler : MonoBehaviour
             isDead = true;
             //todo death animation
             UpgradeManager.instance.AddCoins(1);
+            enemyManager.killPoints.Add(GameManager.instance.points);
         }
     }
 
