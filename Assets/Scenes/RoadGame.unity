@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 374786490}
   - component: {fileID: 374786491}
   - component: {fileID: 374786492}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: "A\u0142to"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1826,6 +1826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedEnemies: []
+  killPoints: 
   enemyPrefab: {fileID: 1701518095969362, guid: 3b8453fe0aa310743a0b230198beec2d,
     type: 2}
   karetkaCar: {fileID: 1405659421444426, guid: 787a3c1fbf290b54c8debedc07bdf073, type: 2}

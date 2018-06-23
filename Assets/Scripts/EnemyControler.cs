@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyControler : MonoBehaviour
-{
+public class EnemyControler:MonoBehaviour {
     //todo dodawac wartosc predkosc z EnemyManager za kazdym refresh
 
     public float speed;
@@ -23,152 +22,129 @@ public class EnemyControler : MonoBehaviour
     private bool isImmortal = false;
     private int slowDownValue = 0;
 
-    private void Start()
-    {
+    private void Start() {
         enemyManager = FindObjectOfType<EnemyManager>();
         playerCar = FindObjectOfType<PlayerCar>();
     }
 
-    private void Awake()
-    {
+    private void Awake() {
         rigidBody = rigidBody ?? GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    private void Update()
-    {
+    private void Update() {
         DriveForward();
         EffectWearOff();
 
-        if (transform.position.x > 25f)
-        {
+        if(transform.position.x > 25f) {
             //playerCar.TakeHeart(1);
             enemyManager.RemoveEnemyFromList(this);
             Destroy(gameObject);
         }
     }
 
-    private void DriveForward()
-    {
-        float actualEnemySpeed = speed + enemyManager.speedUpValue;
+    private void DriveForward() {
+        float actualEnemySpeed = speed + enemyManager.speedUpValue - slowDownValue;
         rigidBody.MovePosition(new Vector3(
             transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * actualEnemySpeed,
             transform.position.y,
             0f));
     }
 
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.name == "Ałto")
-        {
+    public void OnTriggerEnter2D(Collider2D col) {
+        int layer = col.gameObject.layer;
+        if(layer == LayerMask.NameToLayer("Player")) {
             col.GetComponent<PlayerCar>().TakeHeart(1);
-            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+            enemyManager.spawnedEnemies.Remove(this);
             Destroy(gameObject);
         }
-        if (col.name != "Ałto" && col.name != "Słoik")
-        {
-            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
+        if(layer == LayerMask.NameToLayer("Enemy") || layer == LayerMask.NameToLayer("Obstacle")) {
+            enemyManager.spawnedEnemies.Remove(this);
             Destroy(gameObject);
         }
     }
 
-    private void EffectWearOff()
-    {
-        if (effectWearOff < 0)
-        {
+    private void EffectWearOff() {
+        if(effectWearOff < 0) {
             effectWearOff = 0;
             ClearEffects();
-        }
-        else if (effectWearOff > 0)
-        {
+        } else if(effectWearOff > 0) {
             effectWearOff -= Time.deltaTime;
         }
     }
 
-    public void Kill()
-    {
-        if (!isImmortal)
-        {
+    public void Kill() {
+        Debug.Log("Kill");
+        if(!isImmortal) {
             isDead = true;
             //todo death animation
             UpgradeManager.instance.AddCoins(1);
-            enemyManager.killPoints.Add(GameManager.instance.points);
+            Destroy(gameObject);
         }
     }
 
-    private void ClearEffects()
-    {
+    private void ClearEffects() {
         isImmortal = false;
         slowDownValue = 0;
     }
 
-    public void Slow()
-    {
+    public void Slow() {
         ClearEffects();
-
+        Debug.Log("Slow");
         int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
-        switch (effectLevel)
-        {
+        switch(effectLevel) {
+            case 0:
+            slowDownValue = 1;
+            break;
+
             case 1:
-                slowDownValue = 1;
-                break;
+            slowDownValue = 2;
+            break;
 
             case 2:
-                slowDownValue = 2;
-                break;
-
-            case 3:
-                slowDownValue = 3;
-                break;
+            slowDownValue = 3;
+            break;
         }
-
-        slowDownValue *= -1;//grochowa powinna przyspieszac przeciwnikow
 
         effectWearOff = 3;
     }
 
-    public void Immortal()
-    {
+    public void Immortal() {
         ClearEffects();
 
         isImmortal = true;
 
         int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
-        switch (effectLevel)
-        {
+        switch(effectLevel) {
+            case 0:
+            effectWearOff = 1;
+            break;
+
             case 1:
-                effectWearOff = 1;
-                break;
+            effectWearOff = 2;
+            break;
 
             case 2:
-                effectWearOff = 2;
-                break;
-
-            case 3:
-                effectWearOff = 3;
-                break;
+            effectWearOff = 3;
+            break;
         }
     }
 
-    public void Explosion()
-    {
+    public void Explosion() {
         ClearEffects();
         Kill();
     }
 
-    public void Bird()
-    {
+    public void Bird() {
         ClearEffects();
         Kill();
     }
 
-    public void LifeUp()
-    {
+    public void LifeUp() {
         return;// no effect
     }
 
-    public void InstatKill()
-    {
+    public void InstatKill() {
         ClearEffects();
         Kill();
     }

@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sloik : MonoBehaviour
-{
+public class Sloik:MonoBehaviour {
     public float rotateSpeed = 350f;
     public float flySpeed = 25f;
 
-    public int type = 6;
+    public int type;
     public Vector2 target = new Vector2();
     public Vector2 initialPos;
 
@@ -26,16 +25,14 @@ public class Sloik : MonoBehaviour
     private SpriteRenderer _sr;
     public GameObject sloikEffectPrefab;
 
-    private void Awake()
-    {
+    private void Awake() {
         _sr = _sr ?? GetComponent<SpriteRenderer>();
         _sr.sprite = sloikParowki;
 
         initialPos = transform.position;
     }
 
-    private void Update()
-    {
+    private void Update() {
         transform.Rotate(new Vector3(0, 0, Time.deltaTime * rotateSpeed));
 
         Vector2 pos = transform.position;
@@ -43,82 +40,94 @@ public class Sloik : MonoBehaviour
 
         transform.position = pos;
 
-        if ((Vector2)transform.position == target)
-        {
+        if((Vector2)transform.position == target) {
             EagleHasLanded();
         }
 
         float dist = Vector2.Distance(transform.position, target);
-        if (dist >= _initialDistance / 2f)
-        {
+        if(dist >= _initialDistance / 2f) {
             transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 1.5f, Time.deltaTime),
                 Mathf.Lerp(transform.localScale.y, 1.5f, Time.deltaTime),
                 Mathf.Lerp(transform.localScale.z, 1.5f, Time.deltaTime));
-        }
-        else
-        {
+        } else {
             transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 1f, Time.deltaTime),
                 Mathf.Lerp(transform.localScale.y, 1f, Time.deltaTime),
                 Mathf.Lerp(transform.localScale.z, 1f, Time.deltaTime));
         }
     }
 
-    private void EagleHasLanded()
-    {
+    private void EagleHasLanded() {
         //spawn effect
         Debug.Log("Sloik effect spawn");
         Vector3 actualPosition = gameObject.transform.position;
 
-        GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-        SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-        effectController.SetSloikEffect(type);
+        if(type == SloikEffectController.EFFECT_BIRD) {
+            int birdsNumber = 0;
+            switch(UpgradeManager.instance.upgradeLevelGolabki) {
+                case 0:
+                birdsNumber = 2;
+                break;
+                case 1:
+                birdsNumber = 3;
+                break;
+                case 2:
+                birdsNumber = 4;
+                break;
+            }
+            Debug.Log(birdsNumber);
+            for(int i = 0; i < birdsNumber; i++) {
+                GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+                SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+                effectController.SetSloikEffect(type);
+            }
+        } else {
+            GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+            SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+            effectController.SetSloikEffect(type);
+        }
 
         Destroy(gameObject);
     }
 
-    public void SetTarget(Vector2 target)
-    {
+    public void SetTarget(Vector2 target) {
         this.target = target;
         _initialDistance = Vector2.Distance(target, initialPos);
         Debug.DrawLine(transform.position, target, Color.red, 15f);
     }
 
-    public void SetType(int type)
-    {
+    public void SetType(int type) {
         this.type = type;
         _sr.sprite = GetSloikFromType(type);
     }
 
-    private Sprite GetSloikFromType(int type)
-    {
-        switch (type)
-        {
+    private Sprite GetSloikFromType(int type) {
+        switch(type) {//todo uzywanie const z SloikEffectCController
             case 0:
-                return sloikGolabki;
+            return sloikGolabki;
 
             case 1:
-                return sloikGrochowka;
+            return sloikGrochowka;
 
             case 2:
-                return sloikBigos;
+            return sloikBigos;
 
             case 3:
-                return sloikSchabowy;
+            return sloikSchabowy;
 
             case 4:
-                return sloikMix;
+            return sloikMix;
 
             case 5:
-                return sloikLazanki;
+            return sloikLazanki;
 
             case 6:
-                return sloikParowki;
+            return sloikParowki;
 
             case 7:
-                return sloikMeksyk;
+            return sloikMeksyk;
 
             default:
-                return null;
+            return null;
         }
     }
 }
