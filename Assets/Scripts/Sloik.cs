@@ -6,6 +6,8 @@ using UnityEngine;
 public class Sloik:MonoBehaviour {
     public float rotateSpeed = 350f;
     public float flySpeed = 25f;
+    public float nearScale = 1f;
+    public float rearScale = 1.5f;
 
     public int type;
     public Vector2 target = new Vector2();
@@ -46,19 +48,17 @@ public class Sloik:MonoBehaviour {
 
         float dist = Vector2.Distance(transform.position, target);
         if(dist >= _initialDistance / 2f) {
-            transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 1.5f, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.y, 1.5f, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.z, 1.5f, Time.deltaTime));
+            transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, rearScale, Time.deltaTime),
+                Mathf.Lerp(transform.localScale.y, rearScale, Time.deltaTime),
+                Mathf.Lerp(transform.localScale.z, rearScale, Time.deltaTime));
         } else {
-            transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 1f, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.y, 1f, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.z, 1f, Time.deltaTime));
+            transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, nearScale, Time.deltaTime),
+                Mathf.Lerp(transform.localScale.y, nearScale, Time.deltaTime),
+                Mathf.Lerp(transform.localScale.z, nearScale, Time.deltaTime));
         }
     }
 
     private void EagleHasLanded() {
-        //spawn effect
-        Debug.Log("Sloik effect spawn");
         Vector3 actualPosition = gameObject.transform.position;
 
         if(type == SloikEffectController.EFFECT_BIRD) {
@@ -101,7 +101,7 @@ public class Sloik:MonoBehaviour {
     }
 
     private Sprite GetSloikFromType(int type) {
-        switch(type) {//todo uzywanie const z SloikEffectCController
+        switch(type) {
             case 0:
             return sloikGolabki;
 

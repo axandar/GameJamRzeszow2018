@@ -15,11 +15,15 @@ public class Obstacle : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        _rb.MovePosition(new Vector3(transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * speed, transform.position.y, 0f));
+        float roadSpeed = FindObjectOfType<MovingRoad>()._currSpeed;
+
+        _rb.MovePosition(new Vector3(
+            transform.position.x - speed * Time.deltaTime * speed, 
+            transform.position.y, 0f));
         if (transform.position.x < -100f)
         {
             Destroy(gameObject);
-        }
+        } 
     }
 
     private void OnTriggerEnter2D(Collider2D col){

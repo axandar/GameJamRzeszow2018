@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 50424796574008570}
   - component: {fileID: 61469019057521458}
   - component: {fileID: 114909388034560376}
+  - component: {fileID: 114424729911856512}
   m_Layer: 24
   m_Name: Karetka
   m_TagString: Untagged
@@ -114,6 +115,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &114424729911856512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405659421444426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9d588aa9430984ba98e2d74aef5847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  life: 0
+  isDead: 0
+  roadLine: {fileID: 0}
+  coinValue: 1
+  sprites: []
 --- !u!114 &114909388034560376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,7 +147,7 @@ MonoBehaviour:
   life: 0
   isDead: 0
   roadLine: {fileID: 0}
-  coinValue: 1
+  coinValue: -15
 --- !u!212 &212068926452649814
 SpriteRenderer:
   m_ObjectHideFlags: 1

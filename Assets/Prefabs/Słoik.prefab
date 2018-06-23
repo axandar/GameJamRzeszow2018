@@ -148,8 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b9b8d4aae5f104c85345aad8a9a0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 350
-  flySpeed: 25
+  rotateSpeed: 500
+  flySpeed: 15
+  nearScale: 2.5
+  rearScale: 7
   type: 6
   target: {x: 0, y: 0}
   initialPos: {x: 0, y: 0}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,8 +31,13 @@ public class EnemyControler:MonoBehaviour {
         playerCar = FindObjectOfType<PlayerCar>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        int random = UnityEngine.Random.Range(0, sprites.Length-1);
-        spriteRenderer.sprite = sprites[random];
+        try {
+            int random = 0;
+            random = UnityEngine.Random.Range(0, sprites.Length-1);
+            spriteRenderer.sprite = sprites[random];
+        } catch(Exception e) {
+            spriteRenderer.sprite = sprites[0];
+        }
     }
 
     private void Awake() {
