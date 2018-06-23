@@ -13,6 +13,8 @@ public class PlayerCar : MonoBehaviour
     public Sprite lostHeart;
     public Sprite heart;
 
+    public Animator gameOverScreen;
+
     public float[] lanes = new float[] {
         5.25f,
         3.1f,
@@ -35,6 +37,7 @@ public class PlayerCar : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.points = 0;
         enemyManager = FindObjectOfType<EnemyManager>();
         UpgradeManager.instance.LoadUpgrades();
 
@@ -131,6 +134,9 @@ public class PlayerCar : MonoBehaviour
         FindObjectOfType<MovingRoad>().slowdown = true;
         GameManager.instance.inGame = false;
 
+        gameOverScreen.Play("GameOverPanel");
+        UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
+
         StartCoroutine(CrashRoutine());
     }
 
@@ -143,7 +149,7 @@ public class PlayerCar : MonoBehaviour
 
         yield return null;
 
-        if (transform.position.x > -startPos)
+        if (transform.position.x > -11f)
         {
             StartCoroutine(CrashRoutine());
         }
@@ -157,7 +163,6 @@ public class PlayerCar : MonoBehaviour
     public void OnCrashed()
     {
         Debug.Log("OnCrashed()");
-        UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
     }
 
     private void PlayerAliveLogic()
