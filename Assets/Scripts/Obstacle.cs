@@ -22,21 +22,14 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.name == "Ałto")
-        {
+    private void OnTriggerEnter2D(Collider2D col){
+        int layer = col.gameObject.layer;
+        if (layer == LayerMask.NameToLayer("Player")){
             col.GetComponent<PlayerCar>().TakeHeart(1);
             col.GetComponent<PlayerCar>().Immortal();
+        }else if(layer == LayerMask.NameToLayer("Enemy")){
+            col.GetComponent<EnemyControler>().Kill();
+            Destroy(gameObject);
         }
-        else
-        {
-            if (col.name == "Enemy")
-            {
-                //col.GetComponent<EnemyControler>().Kill();
-            }
-        }
-
-        Destroy(gameObject);
     }
 }

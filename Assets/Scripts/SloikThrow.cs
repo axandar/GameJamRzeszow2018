@@ -7,7 +7,6 @@ public class SloikThrow : MonoBehaviour
 {
     public GameObject sloikPrefab;
     public float cooldown = 1f;
-    public Image cldIndicator;
     public int currSloik = 6;
     public GameObject objectUI;
 
@@ -40,7 +39,6 @@ public class SloikThrow : MonoBehaviour
         if (_cooldown > 0f)
         {
             _cooldown -= Time.deltaTime;
-            cldIndicator.fillAmount = _cooldown / cooldown;
         }
         if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame && _cooldown <= 0f)
         {
