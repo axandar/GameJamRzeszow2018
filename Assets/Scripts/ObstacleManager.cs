@@ -46,16 +46,16 @@ public class ObstacleManager : MonoBehaviour
 
     private void SpawnRandomObstacle()
     {
-        int lane = UnityEngine.Random.Range(0, 4);
+        int lane = UnityEngine.Random.Range(0, 5);
 
         switch ((int)UnityEngine.Random.Range(0, 3))
         {
             case 0:
-                Instantiate(narrowRoadUp, new Vector3(25f, lanes[0]), Quaternion.identity);
+                Instantiate(narrowRoadUp, new Vector3(25f, lanes[lane]), Quaternion.identity);
                 break;
 
             case 1:
-                Instantiate(narrowRoadDown, new Vector3(25f, lanes[4]), Quaternion.identity);
+                Instantiate(narrowRoadDown, new Vector3(25f, lanes[lane]), Quaternion.identity);
                 break;
 
             case 2:

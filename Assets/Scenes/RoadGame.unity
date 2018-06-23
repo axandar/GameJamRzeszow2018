@@ -883,8 +883,8 @@ MonoBehaviour:
     type: 2}
   karetkaCar: {fileID: 1405659421444426, guid: 787a3c1fbf290b54c8debedc07bdf073, type: 2}
   speedUpValue: 0
-  maxEnemyCooldown: 6
-  minEnemyCooldown: 1
+  maxEnemyCooldown: 2
+  minEnemyCooldown: 0.3
   maxKaretkaCooldown: 16
   minKaretkaCooldown: 10
   lanes:
@@ -1012,8 +1012,8 @@ MonoBehaviour:
   - 1
   - -1.1
   - -3.25
-  minCooldownBetweenObstacles: 0.1
-  maxCooldownBetweenObstacles: 3
+  minCooldownBetweenObstacles: 2
+  maxCooldownBetweenObstacles: 8
 --- !u!4 &1613113916
 Transform:
   m_ObjectHideFlags: 0

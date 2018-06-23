@@ -10,8 +10,8 @@ public class EnemyManager : MonoBehaviour
 
     public float speedUpValue = 0f;
     private float duration = 0f;
-    private float enemyCooldown = 1f;
-    private float karetkaCooldown = 1f;
+    private float enemyCooldown = 7f;
+    private float karetkaCooldown = 24f;
 
     //spawns properties
     public float maxEnemyCooldown = 2f;
@@ -30,7 +30,6 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnKaretka(int lane){
         if (lane > 5 || lane < 0) {
-            Debug.Log("Zla linia");
             return;
         }
         GameObject e = Instantiate(karetkaCar, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
@@ -38,18 +37,16 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy(int lane){
         if (lane > 5 || lane < 0){
-            Debug.Log("Zla linia");
             return;
         }
 
         //todo ustawianie zmiennych w enemyPrefab
 
         GameObject e = Instantiate(enemyPrefab, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
-        //spawnedEnemies.Add(e.GetComponent<EnemyControler>());
+        spawnedEnemies.Add(e.GetComponent<EnemyControler>());
     }
 
-    private void Update()
-    {
+    private void Update(){
         WearOff();
 
         EnemySpawnCounter();
@@ -87,15 +84,17 @@ public class EnemyManager : MonoBehaviour
         return UnityEngine.Random.Range(0, 5);
     }
 
-    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue)
-    {
+    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue){
         speedUpValue = addedSpeedValue;
         duration = wearOffValue;
     }
 
-    public void RestoreEnemySpeed()
-    {
+    public void RestoreEnemySpeed(){
         speedUpValue = 0;
         duration = 0;
+    }
+
+    public void RemoveEnemyFromList(EnemyControler enemyControler) {
+        spawnedEnemies.Remove(enemyControler);
     }
 }

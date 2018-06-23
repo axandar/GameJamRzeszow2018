@@ -129,7 +129,7 @@ MonoBehaviour:
   life: 0
   isDead: 0
   roadLine: {fileID: 0}
-  coinValue: 1
+  coinValue: 10
 --- !u!212 &212068926452649814
 SpriteRenderer:
   m_ObjectHideFlags: 1
