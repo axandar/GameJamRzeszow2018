@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyControler : MonoBehaviour
 {
-
     //todo dodawac wartosc predkosc z EnemyManager za kazdym refresh
 
     public float speed;
@@ -20,11 +19,12 @@ public class EnemyControler : MonoBehaviour
 
     //Effects
     private float effectWearOff = 0f;
+
     private bool isImmortal = false;
     private int slowDownValue = 0;
 
-
-    private void Start() {
+    private void Start()
+    {
         enemyManager = FindObjectOfType<EnemyManager>();
         playerCar = FindObjectOfType<PlayerCar>();
     }
@@ -40,7 +40,7 @@ public class EnemyControler : MonoBehaviour
         DriveForward();
         EffectWearOff();
 
-        if (transform.position.x > 15f)
+        if (transform.position.x > 25f)
         {
             //playerCar.TakeHeart(1);
             enemyManager.RemoveEnemyFromList(this);

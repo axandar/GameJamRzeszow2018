@@ -24,7 +24,7 @@ public class PlayerCar : MonoBehaviour
     public int currLane = 2;
 
     private float mid = 0.25f;
-    private float startPos = 15f;
+    private float startPos = 25f;
     private bool _crashed = false;
 
     //Effects
