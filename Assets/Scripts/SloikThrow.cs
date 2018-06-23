@@ -10,10 +10,8 @@ public class SloikThrow : MonoBehaviour
 
     public int currSloik = 6;
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame)
-        {
+    private void Update(){
+        if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame){
             mousePos = Input.mousePosition;
             GameObject sloik = Instantiate(sloikPrefab, transform.position, Quaternion.identity);
             Sloik sloikComponent = sloik.GetComponent<Sloik>();
