@@ -153,14 +153,14 @@ MonoBehaviour:
   type: 6
   target: {x: 0, y: 0}
   initialPos: {x: 0, y: 0}
-  sloikGolabki: {fileID: 0}
-  sloikGrochowka: {fileID: 0}
-  sloikBigos: {fileID: 0}
-  sloikSchabowy: {fileID: 0}
+  sloikGolabki: {fileID: 21300000, guid: 55975efa0b416864d931d7c670a7e6cf, type: 3}
+  sloikGrochowka: {fileID: 21300000, guid: b885df79722d3e148b5388483e9706d7, type: 3}
+  sloikBigos: {fileID: 21300000, guid: 8fd3209cc587424448180040ddda9e52, type: 3}
+  sloikSchabowy: {fileID: 21300000, guid: 808b62b0191c33149a19b2e09297ee51, type: 3}
   sloikMix: {fileID: 0}
-  sloikLazanki: {fileID: 0}
+  sloikLazanki: {fileID: 21300000, guid: fbdc17e8cda4393439a9780dc82f8c54, type: 3}
   sloikParowki: {fileID: 21300000, guid: 2931201833f72fa42a1dc1d2b613bb0a, type: 3}
-  sloikMeksyk: {fileID: 0}
+  sloikMeksyk: {fileID: 21300000, guid: b7d433f44dbf62540ba99ce4f10f66fe, type: 3}
   sloikEffectPrefab: {fileID: 1389912943037350, guid: e414832283cbccd45be013464daa62da,
     type: 2}
 --- !u!212 &212501295806766276
