@@ -11,10 +11,13 @@ public class EnemyControler:MonoBehaviour {
     public GameObject roadLine;
     public int coinValue = 1;
 
+    public Sprite[] sprites;
+
     private int screenWidth;
     private EnemyManager enemyManager;
     private PlayerCar playerCar;
     private Rigidbody2D rigidBody;
+    private SpriteRenderer spriteRenderer;
 
     //Effects
     private float effectWearOff = 0f;
@@ -25,6 +28,10 @@ public class EnemyControler:MonoBehaviour {
     private void Start() {
         enemyManager = FindObjectOfType<EnemyManager>();
         playerCar = FindObjectOfType<PlayerCar>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        int random = UnityEngine.Random.Range(0, sprites.Length-1);
+        spriteRenderer.sprite = sprites[random];
     }
 
     private void Awake() {
