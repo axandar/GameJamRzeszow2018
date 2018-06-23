@@ -7,6 +7,8 @@ public class GameOverPanel : MonoBehaviour
 {
     public void Restart()
     {
+        GameManager.instance.inGame = false;
+        GameManager.instance.timer = 120f;
         SceneManager.LoadSceneAsync("RoadGame");
     }
 
