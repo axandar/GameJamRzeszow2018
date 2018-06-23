@@ -281,12 +281,12 @@ public class PlayerCar : MonoBehaviour
                 enemyManager.SpeedUpEnemies(1, 1f);
                 break;
 
-            case 2:
-                enemyManager.SpeedUpEnemies(2, 2f);
+            case 1:
+                enemyManager.SpeedUpEnemies(2, 1f);
                 break;
 
-            case 3:
-                enemyManager.SpeedUpEnemies(3, 3f);
+            case 2:
+                enemyManager.SpeedUpEnemies(3, 1f);
                 break;
         }
 
