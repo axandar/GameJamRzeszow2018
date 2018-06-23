@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public List<EnemyControler> spawnedEnemies = new List<EnemyControler>();
+    public List<long> killPoints = new List<long>();
     public GameObject enemyPrefab;
     public GameObject karetkaCar;
 

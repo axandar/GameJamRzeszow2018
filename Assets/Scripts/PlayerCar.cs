@@ -277,15 +277,15 @@ public class PlayerCar : MonoBehaviour
         int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
         switch (effectLevel)
         {
-            case 0:
+            case 1:
                 enemyManager.SpeedUpEnemies(1, 1f);
                 break;
 
-            case 1:
+            case 2:
                 enemyManager.SpeedUpEnemies(2, 2f);
                 break;
 
-            case 2:
+            case 3:
                 enemyManager.SpeedUpEnemies(3, 3f);
                 break;
         }
@@ -302,15 +302,15 @@ public class PlayerCar : MonoBehaviour
         int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
         switch (effectLevel)
         {
-            case 0:
+            case 1:
                 duration = 1;
                 break;
 
-            case 1:
+            case 2:
                 duration = 2;
                 break;
 
-            case 2:
+            case 3:
                 duration = 3;
                 break;
         }
@@ -335,15 +335,15 @@ public class PlayerCar : MonoBehaviour
 
         switch (effectLevel)
         {
-            case 0:
+            case 1:
                 TakeHeart(1);
                 break;
 
-            case 1:
+            case 2:
                 TakeHeart(2);
                 break;
 
-            case 2:
+            case 3:
                 TakeHeart(3);
                 break;
         }
@@ -357,19 +357,19 @@ public class PlayerCar : MonoBehaviour
     public void LifeUp()
     {
         ClearEffects();
-        
+
         int effectLevel = UpgradeManager.instance.upgradeLevelLazanki;
         switch (effectLevel)
         {
-            case 0:
+            case 1:
                 AddHeart(1);
                 break;
 
-            case 1:
+            case 2:
                 AddHeart(2);
                 break;
 
-            case 2:
+            case 3:
                 AddHeart(3);
                 break;
         }

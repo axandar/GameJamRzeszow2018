@@ -50,21 +50,24 @@ public class EnemyControler : MonoBehaviour
 
     private void DriveForward()
     {
-        float actualEnemySpeed = speed + enemyManager.speedUpValue - slowDownValue;
+        float actualEnemySpeed = speed + enemyManager.speedUpValue;
         rigidBody.MovePosition(new Vector3(
             transform.position.x + FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * actualEnemySpeed,
             transform.position.y,
             0f));
     }
 
-    public void OnTriggerEnter2D(Collider2D col) {
-        int layer = col.gameObject.layer;
-        if (layer == LayerMask.NameToLayer("Player")) {
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name == "Ałto")
+        {
             col.GetComponent<PlayerCar>().TakeHeart(1);
-            enemyManager.spawnedEnemies.Remove(this);
+            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
             Destroy(gameObject);
-        }if (layer == LayerMask.NameToLayer("Enemy") || layer == LayerMask.NameToLayer("Obstacle")) {
-            enemyManager.spawnedEnemies.Remove(this);
+        }
+        if (col.name != "Ałto" && col.name != "Słoik")
+        {
+            FindObjectOfType<EnemyManager>().spawnedEnemies.Remove(this);
             Destroy(gameObject);
         }
     }
@@ -84,13 +87,12 @@ public class EnemyControler : MonoBehaviour
 
     public void Kill()
     {
-        Debug.Log("Kill");
         if (!isImmortal)
         {
             isDead = true;
             //todo death animation
             UpgradeManager.instance.AddCoins(1);
-            Destroy(gameObject);
+            enemyManager.killPoints.Add(GameManager.instance.points);
         }
     }
 
@@ -103,22 +105,24 @@ public class EnemyControler : MonoBehaviour
     public void Slow()
     {
         ClearEffects();
-        Debug.Log("Slow");
+
         int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
         switch (effectLevel)
         {
-            case 0:
+            case 1:
                 slowDownValue = 1;
                 break;
 
-            case 1:
+            case 2:
                 slowDownValue = 2;
                 break;
 
-            case 2:
+            case 3:
                 slowDownValue = 3;
                 break;
         }
+
+        slowDownValue *= -1;//grochowa powinna przyspieszac przeciwnikow
 
         effectWearOff = 3;
     }
@@ -132,15 +136,15 @@ public class EnemyControler : MonoBehaviour
         int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
         switch (effectLevel)
         {
-            case 0:
+            case 1:
                 effectWearOff = 1;
                 break;
 
-            case 1:
+            case 2:
                 effectWearOff = 2;
                 break;
 
-            case 2:
+            case 3:
                 effectWearOff = 3;
                 break;
         }

@@ -8,7 +8,7 @@ public class Sloik : MonoBehaviour
     public float rotateSpeed = 350f;
     public float flySpeed = 25f;
 
-    public int type;
+    public int type = 6;
     public Vector2 target = new Vector2();
     public Vector2 initialPos;
 
@@ -69,30 +69,9 @@ public class Sloik : MonoBehaviour
         Debug.Log("Sloik effect spawn");
         Vector3 actualPosition = gameObject.transform.position;
 
-        if(type == SloikEffectController.EFFECT_BIRD) {
-            int birdsNumber = 0;
-            switch(UpgradeManager.instance.upgradeLevelGolabki) {
-                case 0:
-                    birdsNumber = 2;
-                    break;
-                case 1:
-                    birdsNumber = 3;
-                    break;
-                case 2:
-                    birdsNumber = 4;
-                    break;
-            }
-            Debug.Log(birdsNumber);
-            for(int i = 0; i < birdsNumber; i++) {
-                GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-                SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-                effectController.SetSloikEffect(type);
-            }
-        } else {
-            GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-            SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-            effectController.SetSloikEffect(type);
-        }
+        GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+        SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+        effectController.SetSloikEffect(type);
 
         Destroy(gameObject);
     }
@@ -113,7 +92,7 @@ public class Sloik : MonoBehaviour
     private Sprite GetSloikFromType(int type)
     {
         switch (type)
-        {//todo uzywanie const z SloikEffectCController
+        {
             case 0:
                 return sloikGolabki;
 

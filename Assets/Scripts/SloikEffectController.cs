@@ -5,44 +5,30 @@ using UnityEngine;
 public class SloikEffectController : MonoBehaviour {
 
     public const int EFFECT_SLOW = 1;
-    public const int EFFECT_BIRD = 0;
-    public const int EFFECT_EXPLOSION_CIRCLE = 2;
-    public const int EFFECT_IMMORTAL = 3;
-    public const int EFFECT_RANDOM = 4;
+    public const int EFFECT_BIRD = 2;
+    public const int EFFECT_EXPLOSION_CIRCLE = 3;
+    public const int EFFECT_IMMORTAL = 4;
+    public const int EFFECT_RANDOM = 100;
     public const int EFFECT_LIFE_UP = 5;
     public const int EFFECT_INSTANT_KILL = 6;
     public const int EFFECT_EXPLOSION_LINES = 7;
 
     public const int TYPE_CIRCLE = 1;
     public const int TYPE_LINE = 2;
-    
+
+    public float roadSpeed = 5f;
     public int effect;
     public float duration = 0;
 
-    public Sprite effectGolabki;     //0 type
-    public Sprite effectGrochowka;   //1
-    public Sprite effectBigos;       //2
-    public Sprite effectSchabowy;    //3
-    public Sprite effectLazanki;     //5
-    public Sprite effectParowki;     //6
-    public Sprite effectMeksyk;      //7
-
     private Rigidbody2D rigidBody;
-    private SpriteRenderer spriteRendere;
-    private bool isBird = false;
 
     private void Awake() {
         rigidBody = rigidBody ?? GetComponent<Rigidbody2D>();
-        spriteRendere = spriteRendere ?? GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update () {
         EffectWearOff();
-
-        if(isBird) {
-            MoveBird();
-        }
 	}
 
     private void EffectWearOff() {
@@ -56,77 +42,73 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
-    private void MoveBird() {
-        transform.Translate(Vector3.forward * Time.deltaTime);
+    private void MoveWithRoad() {
+        rigidBody.MovePosition(new Vector3(
+            transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * roadSpeed, 
+            transform.position.y,
+            0f));
+        if(transform.position.x < -100f) {
+            Destroy(gameObject);
+        }
     }
 
     public void SetSloikEffect(int sloikEffect) {
         effect = sloikEffect;
-        duration = 1f;
+        duration = 2f;
 
         switch(effect) {
             case EFFECT_SLOW:
-                SetSprite(effectGrochowka);
-                SetSize(1f, 1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_BIRD:
-                SetSprite(effectGolabki);
-                SetSize(1f, 1f);
-                isBird = true;
-                float rotation = UnityEngine.Random.Range(1, UpgradeManager.instance.upgradeLevelGolabki-1);
-                rotation = 360f / rotation;
-                transform.Rotate(new Vector3(0, 0, 45f));
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_EXPLOSION_CIRCLE:
-                SetSprite(effectBigos);
-                SetSize(1f, 1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_IMMORTAL:
-                SetSprite(effectSchabowy);
-                SetSize(1f, 1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_RANDOM:
                 SetSloikEffect(GetRandomEffect());
                 break;
             case EFFECT_LIFE_UP:
-                SetSprite(effectLazanki);
-                SetSize(1f, 1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_INSTANT_KILL:
-                SetSprite(effectParowki);
-                SetSize(1f, 1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
             case EFFECT_EXPLOSION_LINES:
-                SetSprite(effectMeksyk);
-                SetSize(1f, 1f);
+                SetColliderSize(1, 1, TYPE_LINE);
                 break;
         }
     }
 
     //dla kola bierze pod uwage tylko wartosc X
-    private void SetSize(float x, float y) {
-        transform.localScale = new Vector3(10, 10, 1);
-        PolygonCollider2D collider2D = gameObject.AddComponent<PolygonCollider2D>();
-        collider2D.isTrigger = true;
+    private void SetColliderSize(float x, float y, int type) {
+        if(type == TYPE_CIRCLE) {
+            CircleCollider2D circleCollider = gameObject.AddComponent<CircleCollider2D>();
+            circleCollider.radius = x;
+            circleCollider.isTrigger = true;
+        } else if(type == TYPE_LINE) {
+            BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
+            boxCollider.size = new Vector2(x, y);
+            boxCollider.isTrigger = true;
+        }
     }
 
-    private void SetSprite(Sprite sprite) {
-        spriteRendere.sprite = sprite;
-    }
-
-    public void OnTriggerEnter2D(Collider2D col) {
-        int layer = col.gameObject.layer;
-        if(layer == LayerMask.NameToLayer("Enemy")) {
-            EnemyControler enemyController = col.gameObject.GetComponent<EnemyControler>();
-            OnEnemyContact(enemyController); 
-        } else if(layer == LayerMask.NameToLayer("Player")) {
-            PlayerCar playerControler = col.gameObject.GetComponent<PlayerCar>();
+    void OnCollisionEnter(Collision col) {
+        Debug.Log(col.gameObject.name);
+        if(col.gameObject.name != "Ałto") {
+            EnemyControler enemyController = gameObject.GetComponent<EnemyControler>();
+            OnEnemyContact(enemyController);
+        } else {
+            PlayerCar playerControler = gameObject.GetComponent<PlayerCar>();
             OnPlayerContact(playerControler);
         }
     }
     
     void OnEnemyContact(EnemyControler enemyControler) {
-        Debug.Log(effect);
         switch(effect) {
             case EFFECT_SLOW:
                 enemyControler.Slow();
@@ -179,10 +161,7 @@ public class SloikEffectController : MonoBehaviour {
     }
 
     private int GetRandomEffect() {
-        int number = UnityEngine.Random.Range(0, 8);
-        if(number == EFFECT_RANDOM) {
-            return GetRandomEffect();
-        }
-        return number;
+
+        return (int)(Random.Range(0.0f, 7.0f)*10);
     }
 }

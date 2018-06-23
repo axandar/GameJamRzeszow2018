@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4009241863348208}
   - component: {fileID: 114545439002826254}
-  - component: {fileID: 50061993523653116}
   m_Layer: 0
   m_Name: SloikEffect
   m_TagString: Untagged
@@ -41,26 +40,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50061993523653116
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1389912943037350}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &114545439002826254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -72,12 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0eacd271aacce41afb135d0e80cccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roadSpeed: 5
   effect: 1
   duration: 0
-  effectGolabki: {fileID: 21300000, guid: 428c7168e3e31164a905006d78c84590, type: 3}
-  effectGrochowka: {fileID: 21300000, guid: 9b5a5fa9a2e6a714ba7812ddd54e9f29, type: 3}
-  effectBigos: {fileID: 21300000, guid: f9d57bbdccf5ed34e81e92fa236c9f01, type: 3}
-  effectSchabowy: {fileID: 21300000, guid: bf60e18729a9c7a4b8296cb4b4a09bbe, type: 3}
-  effectLazanki: {fileID: 21300000, guid: d47f31b23b440f34bb1cf9c0260945fb, type: 3}
-  effectParowki: {fileID: 21300000, guid: bac05242b73a92a4b84093f205c42aad, type: 3}
-  effectMeksyk: {fileID: 21300000, guid: 47f3c70ecc2697447bf2948a8e8e9187, type: 3}
