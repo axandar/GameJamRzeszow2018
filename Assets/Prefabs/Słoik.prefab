@@ -161,6 +161,8 @@ MonoBehaviour:
   sloikLazanki: {fileID: 0}
   sloikParowki: {fileID: 21300000, guid: 2931201833f72fa42a1dc1d2b613bb0a, type: 3}
   sloikMeksyk: {fileID: 0}
+  sloikEffectPrefab: {fileID: 1389912943037350, guid: e414832283cbccd45be013464daa62da,
+    type: 2}
 --- !u!212 &212501295806766276
 SpriteRenderer:
   m_ObjectHideFlags: 1

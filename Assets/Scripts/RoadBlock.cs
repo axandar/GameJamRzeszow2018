@@ -25,8 +25,6 @@ public class RoadBlock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.name);
-
         if (col.name == "Ałto")
         {
             col.GetComponent<PlayerCar>().TakeHeart(1);

@@ -116,7 +116,6 @@ public class PlayerCar : MonoBehaviour
     //called when slide in finishes
     private void OnPlayerSlidedIn()
     {
-        Debug.Log("OnPlayerSlidedIn()");
         GameManager.instance.inGame = true;
     }
 

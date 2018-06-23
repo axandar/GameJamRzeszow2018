@@ -24,7 +24,7 @@ public class Sloik : MonoBehaviour
     public Sprite sloikMeksyk;      //7
 
     private SpriteRenderer _sr;
-    private GameObject sloikEffectPrefab;
+    public GameObject sloikEffectPrefab;
 
     private void Awake()
     {
@@ -66,14 +66,13 @@ public class Sloik : MonoBehaviour
     private void EagleHasLanded()
     {
         //spawn effect
-
+        Debug.Log("Sloik effect spawn");
         Vector3 actualPosition = gameObject.transform.position;
-        if (sloikEffectPrefab != null)
-        {
-            GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-            SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-            effectController.SetSloikEffect(type);
-        }
+
+        GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+        SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+        effectController.SetSloikEffect(type);
+
         Destroy(gameObject);
     }
 

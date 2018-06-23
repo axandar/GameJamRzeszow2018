@@ -16,9 +16,9 @@ public class SloikEffectController : MonoBehaviour {
     public const int TYPE_CIRCLE = 1;
     public const int TYPE_LINE = 2;
 
-    public float speed = 5f;
+    public float roadSpeed = 5f;
     public int effect;
-    public float duration;
+    public float duration = 0;
 
     private Rigidbody2D rigidBody;
 
@@ -32,16 +32,19 @@ public class SloikEffectController : MonoBehaviour {
 	}
 
     private void EffectWearOff() {
-        duration -= Time.deltaTime;
+        if(duration > 0) {
+            duration -= Time.deltaTime;
+        }
 
-        if(duration <= 0) {
+        if(duration < 0) {
+            Debug.Log("Effect ended");
             Destroy(gameObject);
         }
     }
 
     private void MoveWithRoad() {
         rigidBody.MovePosition(new Vector3(
-            transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * speed, 
+            transform.position.x - FindObjectOfType<MovingRoad>()._currSpeed * Time.deltaTime * roadSpeed, 
             transform.position.y,
             0f));
         if(transform.position.x < -100f) {
@@ -49,19 +52,9 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
-    //dla kola bierze pod uwage tylko wartosc X
-    private void SetColliderSize(float x, float y, int type) {
-        if(type == TYPE_CIRCLE) {
-            CircleCollider2D circleCollider = gameObject.AddComponent<CircleCollider2D>();
-            circleCollider.radius = x;
-        } else if(type == TYPE_LINE) {
-            BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
-            boxCollider.size = new Vector2(x, y);
-        }
-    }
-
     public void SetSloikEffect(int sloikEffect) {
         effect = sloikEffect;
+        duration = 2f;
 
         switch(effect) {
             case EFFECT_SLOW:
@@ -91,7 +84,21 @@ public class SloikEffectController : MonoBehaviour {
         }
     }
 
+    //dla kola bierze pod uwage tylko wartosc X
+    private void SetColliderSize(float x, float y, int type) {
+        if(type == TYPE_CIRCLE) {
+            CircleCollider2D circleCollider = gameObject.AddComponent<CircleCollider2D>();
+            circleCollider.radius = x;
+            circleCollider.isTrigger = true;
+        } else if(type == TYPE_LINE) {
+            BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
+            boxCollider.size = new Vector2(x, y);
+            boxCollider.isTrigger = true;
+        }
+    }
+
     void OnCollisionEnter(Collision col) {
+        Debug.Log(col.gameObject.name);
         if(col.gameObject.name != "Ałto") {
             EnemyControler enemyController = gameObject.GetComponent<EnemyControler>();
             OnEnemyContact(enemyController);
