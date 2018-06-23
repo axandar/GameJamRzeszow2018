@@ -6,9 +6,6 @@ public class EnemyManager : MonoBehaviour
 {
     public List<EnemyControler> spawnedEnemies = new List<EnemyControler>();
     public GameObject enemyPrefab;
-    public GameObject narrowRoadUp;
-    public GameObject narrowRoadDown;
-    public GameObject roadWorks;
 
     public float speedUpValue = 0f;
     private float duration = 0f;
@@ -34,25 +31,32 @@ public class EnemyManager : MonoBehaviour
         spawnedEnemies.Add(e.GetComponent<EnemyControler>());
     }
 
-    void Update() {
+    private void Update()
+    {
         WearOff();
     }
 
-    private void WearOff() {
-        if(duration > 0) {
+    private void WearOff()
+    {
+        if (duration > 0)
+        {
             duration -= Time.deltaTime;
-        } else if(duration < 0) {
+        }
+        else if (duration < 0)
+        {
             duration = 0;
             speedUpValue = 0;
         }
     }
 
-    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue) {
+    public void SpeedUpEnemies(int addedSpeedValue, float wearOffValue)
+    {
         speedUpValue = addedSpeedValue;
         duration = wearOffValue;
     }
 
-    public void RestoreEnemySpeed() {
+    public void RestoreEnemySpeed()
+    {
         speedUpValue = 0;
         duration = 0;
     }

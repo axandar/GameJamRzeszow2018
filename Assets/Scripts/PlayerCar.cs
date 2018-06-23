@@ -12,6 +12,7 @@ public class PlayerCar : MonoBehaviour
     public Image[] hearts;
     public Sprite lostHeart;
     public Sprite heart;
+
     public float[] lanes = new float[] {
         5.25f,
         3.1f,
@@ -19,6 +20,7 @@ public class PlayerCar : MonoBehaviour
         -1.1f,
         -3.25f
     };
+
     public int currLane = 2;
 
     private float mid = 0.25f;
@@ -27,8 +29,9 @@ public class PlayerCar : MonoBehaviour
 
     //Effects
     private float duration = 0f;
+
     private EnemyManager enemyManager;
-    private bool isImmortal = false;
+    public bool isImmortal = false;
 
     private void Start()
     {
@@ -49,14 +52,20 @@ public class PlayerCar : MonoBehaviour
         StartCoroutine(PlayerSlideIn());
     }
 
-    private void Update() {
-        if(alive) {
+    private void Update()
+    {
+        if (alive)
+        {
             PlayerAliveLogic();
-            if(GameManager.instance.inGame) {
+            if (GameManager.instance.inGame)
+            {
                 GameManager.instance.points++;
             }
-        } else {
-            if(!_crashed) {
+        }
+        else
+        {
+            if (!_crashed)
+            {
                 _crashed = true;
                 Crashed();
             }
@@ -234,14 +243,19 @@ public class PlayerCar : MonoBehaviour
 
     private void ClearEffects()
     {
+        Debug.Log("Clear");
         isImmortal = false;
         enemyManager.RestoreEnemySpeed();
     }
 
-    private void WearOff() {
-        if(duration > 0) {
+    private void WearOff()
+    {
+        if (duration > 0)
+        {
             duration -= Time.deltaTime;
-        } else if(duration < 0) {
+        }
+        else if (duration <= 0)
+        {
             duration = 0;
             ClearEffects();
             enemyManager.RestoreEnemySpeed();
@@ -266,7 +280,7 @@ public class PlayerCar : MonoBehaviour
             case 3:
                 enemyManager.SpeedUpEnemies(3, 3f);
                 break;
-        }   
+        }
 
         duration = 3;
     }
@@ -300,14 +314,15 @@ public class PlayerCar : MonoBehaviour
 
         int effectLevel = 0;
 
-        switch(effectID) {
+        switch (effectID)
+        {
             case SloikEffectController.EFFECT_EXPLOSION_CIRCLE:
                 effectLevel = UpgradeManager.instance.upgradeLevelBigos;
                 break;
+
             case SloikEffectController.EFFECT_EXPLOSION_LINES:
                 effectLevel = UpgradeManager.instance.upgradeLevelMeksyk;
                 break;
-
         }
 
         switch (effectLevel)
@@ -365,7 +380,8 @@ public class PlayerCar : MonoBehaviour
 
     public void TakeHeart(int number)
     {
-        if(!isImmortal) {
+        if (!isImmortal)
+        {
             hitsLeft -= number;
         }
     }
