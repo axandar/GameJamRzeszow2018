@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     public List<EnemyControler> spawnedEnemies = new List<EnemyControler>();
     public GameObject enemyPrefab;
+    public GameObject karetkaCar;
 
     public float speedUpValue = 0f;
     private float duration = 0f;
@@ -18,6 +19,15 @@ public class EnemyManager : MonoBehaviour
         -3.25f
     };
 
+    public void SpawnKaretka(int lane)
+    {
+        if (lane > 5 || lane < 0)
+        {
+            return;
+        }
+        GameObject e = Instantiate(karetkaCar, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
+    }
+
     public void SpawnEnemy(int lane)
     {
         if (lane > 5 || lane < 0)
@@ -28,7 +38,7 @@ public class EnemyManager : MonoBehaviour
         //todo ustawianie zmiennych w enemyPrefab
 
         GameObject e = Instantiate(enemyPrefab, new Vector3(-15f, lanes[lane], 0f), Quaternion.identity);
-        spawnedEnemies.Add(e.GetComponent<EnemyControler>());
+        //spawnedEnemies.Add(e.GetComponent<EnemyControler>());
     }
 
     private void Update()

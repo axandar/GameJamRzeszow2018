@@ -37,7 +37,10 @@ public class ObstacleManager : MonoBehaviour
         {
             _cooldown = UnityEngine.Random.Range(minCooldownBetweenObstacles, maxCooldownBetweenObstacles);
 
-            SpawnRandomObstacle();
+            if (GameManager.instance.inGame)
+            {
+                SpawnRandomObstacle();
+            }
         }
     }
 

@@ -210,6 +210,10 @@ public class PlayerCar : MonoBehaviour
 
         Vector3 playerpos = transform.position;
         playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
+        if (GameManager.instance.points % 50 == 0) //random car bump
+        {
+            playerpos.y -= 0.05f;
+        }
         transform.position = playerpos;
     }
 
@@ -243,7 +247,7 @@ public class PlayerCar : MonoBehaviour
 
     private void ClearEffects()
     {
-        Debug.Log("Clear");
+        //Debug.Log("Clear");
         isImmortal = false;
         enemyManager.RestoreEnemySpeed();
     }
