@@ -247,6 +247,48 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 6
+--- !u!1001 &338507341
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -101.377
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -2.877
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189373580423238, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f49552825d7ec664cb71b40a557903cf, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &366435598
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +363,7 @@ GameObject:
   - component: {fileID: 374786489}
   - component: {fileID: 374786490}
   - component: {fileID: 374786491}
+  - component: {fileID: 374786492}
   m_Layer: 0
   m_Name: "A\u0142to"
   m_TagString: Untagged
@@ -460,6 +503,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &374786492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 374786486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea24ef0877d4f442b109a15953884aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sloikPrefab: {fileID: 1065122756295114, guid: f49552825d7ec664cb71b40a557903cf,
+    type: 2}
+  currSloik: 6
 --- !u!1 &570866119
 GameObject:
   m_ObjectHideFlags: 0

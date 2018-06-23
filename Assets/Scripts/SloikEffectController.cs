@@ -8,10 +8,10 @@ public class SloikEffectController : MonoBehaviour {
     public const int EFFECT_BIRD = 2;
     public const int EFFECT_EXPLOSION_CIRCLE = 3;
     public const int EFFECT_IMMORTAL = 4;
-    public const int EFFECT_RANDOM = 5;
-    public const int EFFECT_LIFE_UP = 6;
-    public const int EFFECT_INSTANT_KILL = 7;
-    public const int EFFECT_EXPLOSION_LINES = 8;
+    public const int EFFECT_RANDOM = 100;
+    public const int EFFECT_LIFE_UP = 5;
+    public const int EFFECT_INSTANT_KILL = 6;
+    public const int EFFECT_EXPLOSION_LINES = 7;
 
     public const int TYPE_CIRCLE = 1;
     public const int TYPE_LINE = 2;
@@ -50,13 +50,44 @@ public class SloikEffectController : MonoBehaviour {
     }
 
     //dla kola bierze pod uwage tylko wartosc X
-    public void SetColliderSize(float x, float y, int type) {
+    private void SetColliderSize(float x, float y, int type) {
         if(type == TYPE_CIRCLE) {
             CircleCollider2D circleCollider = gameObject.AddComponent<CircleCollider2D>();
             circleCollider.radius = x;
         } else if(type == TYPE_LINE) {
             BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
             boxCollider.size = new Vector2(x, y);
+        }
+    }
+
+    public void SetSloikEffect(int sloikEffect) {
+        effect = sloikEffect;
+
+        switch(effect) {
+            case EFFECT_SLOW:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
+            case EFFECT_BIRD:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
+            case EFFECT_EXPLOSION_CIRCLE:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
+            case EFFECT_IMMORTAL:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
+            case EFFECT_RANDOM:
+                SetSloikEffect(GetRandomEffect());
+                break;
+            case EFFECT_LIFE_UP:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
+            case EFFECT_INSTANT_KILL:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
+            case EFFECT_EXPLOSION_LINES:
+                SetColliderSize(1, 1, TYPE_LINE);
+                break;
         }
     }
 
@@ -84,10 +115,6 @@ public class SloikEffectController : MonoBehaviour {
             case EFFECT_IMMORTAL:
                 enemyControler.Immortal();
                 break;
-            case EFFECT_RANDOM:
-                effect = GetRandomEffect();
-                OnEnemyContact(enemyControler);
-                break;
             case EFFECT_LIFE_UP:
                 enemyControler.LifeUp();
                 break;
@@ -114,10 +141,6 @@ public class SloikEffectController : MonoBehaviour {
             case EFFECT_IMMORTAL:
                 playerController.Immortal();
                 break;
-            case EFFECT_RANDOM:
-                effect = GetRandomEffect();
-                OnPlayerContact(playerController);
-                break;
             case EFFECT_LIFE_UP:
                 playerController.LifeUp();
                 break;
@@ -131,6 +154,7 @@ public class SloikEffectController : MonoBehaviour {
     }
 
     private int GetRandomEffect() {
-        return (int)Random.Range(0.0f, 1.0f)*10;
+
+        return (int)(Random.Range(0.0f, 7.0f)*10);
     }
 }
