@@ -134,6 +134,9 @@ public class PlayerCar : MonoBehaviour
         FindObjectOfType<MovingRoad>().slowdown = true;
         GameManager.instance.inGame = false;
 
+        gameOverScreen.Play("GameOverPanel");
+        UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
+
         StartCoroutine(CrashRoutine());
     }
 
@@ -160,8 +163,6 @@ public class PlayerCar : MonoBehaviour
     public void OnCrashed()
     {
         Debug.Log("OnCrashed()");
-        gameOverScreen.Play("GameOverPanel");
-        UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
     }
 
     private void PlayerAliveLogic()
