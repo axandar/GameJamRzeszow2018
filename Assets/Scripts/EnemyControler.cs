@@ -42,7 +42,7 @@ public class EnemyControler : MonoBehaviour
 
         if (transform.position.x > 15f)
         {
-            playerCar.TakeHeart(1);
+            //playerCar.TakeHeart(1);
             enemyManager.spawnedEnemies.Remove(this);
             Destroy(gameObject);
         }
