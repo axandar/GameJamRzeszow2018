@@ -69,36 +69,9 @@ public class Sloik : MonoBehaviour
         Debug.Log("Sloik effect spawn");
         Vector3 actualPosition = gameObject.transform.position;
 
-<<<<<<< HEAD
         GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
         SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
         effectController.SetSloikEffect(type);
-=======
-        if(type == SloikEffectController.EFFECT_BIRD) {
-            int birdsNumber = 0;
-            switch(UpgradeManager.instance.upgradeLevelGolabki) {
-                case 0:
-                    birdsNumber = 2;
-                    break;
-                case 1:
-                    birdsNumber = 3;
-                    break;
-                case 2:
-                    birdsNumber = 4;
-                    break;
-            }
-            Debug.Log(birdsNumber);
-            for(int i = 0; i < birdsNumber; i++) {
-                GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-                SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-                effectController.SetSloikEffect(type);
-            }
-        } else {
-            GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-            SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-            effectController.SetSloikEffect(type);
-        }
->>>>>>> Michal
 
         Destroy(gameObject);
     }

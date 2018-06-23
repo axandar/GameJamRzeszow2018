@@ -51,12 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0eacd271aacce41afb135d0e80cccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roadSpeed: 5
   effect: 1
   duration: 0
-  effectGolabki: {fileID: 21300000, guid: 428c7168e3e31164a905006d78c84590, type: 3}
-  effectGrochowka: {fileID: 21300000, guid: 9b5a5fa9a2e6a714ba7812ddd54e9f29, type: 3}
-  effectBigos: {fileID: 21300000, guid: f9d57bbdccf5ed34e81e92fa236c9f01, type: 3}
-  effectSchabowy: {fileID: 21300000, guid: bf60e18729a9c7a4b8296cb4b4a09bbe, type: 3}
-  effectLazanki: {fileID: 21300000, guid: d47f31b23b440f34bb1cf9c0260945fb, type: 3}
-  effectParowki: {fileID: 21300000, guid: bac05242b73a92a4b84093f205c42aad, type: 3}
-  effectMeksyk: {fileID: 21300000, guid: 47f3c70ecc2697447bf2948a8e8e9187, type: 3}
