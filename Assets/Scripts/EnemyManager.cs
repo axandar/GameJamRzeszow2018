@@ -54,8 +54,11 @@ public class EnemyManager : MonoBehaviour
     {
         WearOff();
 
-        EnemySpawnCounter();
-        KaretkaSpawnCounter();
+        if (GameManager.instance.inGame)
+        {
+            EnemySpawnCounter();
+            KaretkaSpawnCounter();
+        }
     }
 
     private void WearOff()
