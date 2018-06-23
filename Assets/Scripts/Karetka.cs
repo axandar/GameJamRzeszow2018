@@ -26,6 +26,7 @@ public class Karetka : MonoBehaviour
     private void Start()
     {
         playerCar = FindObjectOfType<PlayerCar>();
+        enemyManager = FindObjectOfType<EnemyManager>();
     }
 
     private void Awake()
@@ -39,7 +40,7 @@ public class Karetka : MonoBehaviour
         DriveForward();
         EffectWearOff();
 
-        if (transform.position.x > 15f)
+        if (transform.position.x > 25f)
         {
             Destroy(gameObject);
         }

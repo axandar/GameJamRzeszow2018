@@ -12,7 +12,7 @@ public class EnemyManager : MonoBehaviour
     public float speedUpValue = 0f;
     private float duration = 0f;
     private float enemyCooldown = 7f;
-    private float karetkaCooldown = 24f;
+    private float karetkaCooldown = 14f;
 
     //spawns properties
     public float maxEnemyCooldown = 2f;
