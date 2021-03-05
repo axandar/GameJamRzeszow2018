@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.RacingGameRzeszow.iml
+# Datasource local storage ignored files
+/../../../../../../../../:\Programowanie\Unity\Projekty\RacingGameRzeszow\.idea\.idea.RacingGameRzeszow\.idea/dataSources/
+/dataSources.local.xml
