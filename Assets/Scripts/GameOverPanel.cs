@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverPanel : MonoBehaviour
-{
-    public void Restart()
-    {
-        GameManager.instance.inGame = false;
-        GameManager.instance.timer = 120f;
-        SceneManager.LoadSceneAsync("RoadGame");
-    }
+public class GameOverPanel : MonoBehaviour{
+	public void Restart(){
+		GameManager.Instance.inGame = false;
+		GameManager.Instance.timer = 120f;
+		SceneManager.LoadSceneAsync("RoadGame");
+	}
 
-    public void ToMenu()
-    {
-        SceneManager.LoadSceneAsync("MainMenu");
-    }
+	public void ToMenu(){
+		SceneManager.LoadSceneAsync("MainMenu");
+	}
 }

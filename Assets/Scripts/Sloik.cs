@@ -3,131 +3,137 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sloik:MonoBehaviour {
-    public float rotateSpeed = 350f;
-    public float flySpeed = 25f;
-    public float nearScale = 1f;
-    public float rearScale = 1.5f;
+public class Sloik : MonoBehaviour{
+	public float rotateSpeed = 350f;
+	public float flySpeed = 25f;
+	public float nearScale = 1f;
+	public float rearScale = 1.5f;
 
-    public int type;
-    public Vector2 target = new Vector2();
-    public Vector2 initialPos;
+	public int type;
+	public Vector2 target;
+	public Vector2 initialPos;
 
-    private float _initialDistance;
+	private float _initialDistance;
 
-    public Sprite sloikGolabki;     //0 type
-    public Sprite sloikGrochowka;   //1
-    public Sprite sloikBigos;       //2
-    public Sprite sloikSchabowy;    //3
-    public Sprite sloikMix;         //4
-    public Sprite sloikLazanki;     //5
-    public Sprite sloikParowki;     //6
-    public Sprite sloikMeksyk;      //7
+	public Sprite sloikGolabki; //0 type
+	public Sprite sloikGrochowka; //1
+	public Sprite sloikBigos; //2
+	public Sprite sloikSchabowy; //3
+	public Sprite sloikMix; //4
+	public Sprite sloikLazanki; //5
+	public Sprite sloikParowki; //6
+	public Sprite sloikMeksyk; //7
 
-    private SpriteRenderer _sr;
-    public GameObject sloikEffectPrefab;
+	private SpriteRenderer _sr;
+	public GameObject sloikEffectPrefab;
 
-    private void Awake() {
-        _sr = _sr ?? GetComponent<SpriteRenderer>();
-        _sr.sprite = sloikParowki;
+	private void Awake(){
+		_sr = GetComponent<SpriteRenderer>();
+		_sr.sprite = sloikParowki;
 
-        initialPos = transform.position;
-    }
+		initialPos = transform.position;
+	}
 
-    private void Update() {
-        transform.Rotate(new Vector3(0, 0, Time.deltaTime * rotateSpeed));
+	private void Update(){
+		var transform1 = transform;
+		
+		transform1.Rotate(new Vector3(0, 0, Time.deltaTime * rotateSpeed));
 
-        Vector2 pos = transform.position;
-        pos = Vector2.MoveTowards(pos, target, Time.deltaTime * flySpeed);
+		var pos = transform1.position;
+		pos = Vector2.MoveTowards(pos, target, Time.deltaTime * flySpeed);
 
-        transform.position = pos;
+		transform1.position = pos;
 
-        if((Vector2)transform.position == target) {
-            EagleHasLanded();
-        }
+		if((Vector2) transform1.position == target){
+			EagleHasLanded();
+		}
 
-        float dist = Vector2.Distance(transform.position, target);
-        if(dist >= _initialDistance / 2f) {
-            transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, rearScale, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.y, rearScale, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.z, rearScale, Time.deltaTime));
-        } else {
-            transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, nearScale, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.y, nearScale, Time.deltaTime),
-                Mathf.Lerp(transform.localScale.z, nearScale, Time.deltaTime));
-        }
-    }
+		var localScale = transform1.localScale;
+		var dist = Vector2.Distance(transform1.position, target);
+		if(dist >= _initialDistance / 2f){
+			localScale = new Vector3(Mathf.Lerp(localScale.x, rearScale, Time.deltaTime), 
+				Mathf.Lerp(localScale.y, rearScale, Time.deltaTime), 
+				Mathf.Lerp(localScale.z, rearScale, Time.deltaTime));
+			transform.localScale = localScale;
+		} else{
+			localScale = new Vector3(Mathf.Lerp(localScale.x, nearScale, Time.deltaTime), 
+				Mathf.Lerp(localScale.y, nearScale, Time.deltaTime), 
+				Mathf.Lerp(localScale.z, nearScale, Time.deltaTime));
+			transform.localScale = localScale;
+		}
+	}
 
-    private void EagleHasLanded() {
-        Vector3 actualPosition = gameObject.transform.position;
+	private void EagleHasLanded(){
+		var actualPosition = gameObject.transform.position;
 
-        if(type == SloikEffectController.EFFECT_BIRD) {
-            int birdsNumber = 0;
-            switch(UpgradeManager.instance.upgradeLevelGolabki) {
-                case 0:
-                birdsNumber = 2;
-                break;
-                case 1:
-                birdsNumber = 3;
-                break;
-                case 2:
-                birdsNumber = 4;
-                break;
-            }
-            Debug.Log(birdsNumber);
-            for(int i = 0; i < birdsNumber; i++) {
-                GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-                SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-                effectController.SetSloikEffect(type);
-            }
-        } else {
-            GameObject sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-            SloikEffectController effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-            effectController.SetSloikEffect(type);
-        }
+		if(type == SloikEffectController.EFFECT_BIRD){
+			var birdsNumber = 0;
+			switch(UpgradeManager.Instance.upgradeLevelGolabki){
+				case 0:
+					birdsNumber = 2;
+					break;
+				case 1:
+					birdsNumber = 3;
+					break;
+				case 2:
+					birdsNumber = 4;
+					break;
+			}
 
-        Destroy(gameObject);
-    }
+			Debug.Log(birdsNumber);
+			for(int i = 0; i < birdsNumber; i++){
+				var sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+				var effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+				effectController.SetSloikEffect(type);
+			}
+		} else{
+			var sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
+			var effectController = sloikEffectObject.GetComponent<SloikEffectController>();
+			effectController.SetSloikEffect(type);
+		}
 
-    public void SetTarget(Vector2 target) {
-        this.target = target;
-        _initialDistance = Vector2.Distance(target, initialPos);
-        Debug.DrawLine(transform.position, target, Color.red, 15f);
-    }
+		Destroy(gameObject);
+	}
 
-    public void SetType(int type) {
-        this.type = type;
-        _sr.sprite = GetSloikFromType(type);
-    }
+	public void SetTarget(Vector2 target){
+		this.target = target;
+		_initialDistance = Vector2.Distance(target, initialPos);
+		Debug.DrawLine(transform.position, target, Color.red, 15f);
+	}
 
-    private Sprite GetSloikFromType(int type) {
-        switch(type) {
-            case 0:
-            return sloikGolabki;
+	public void SetType(int type){
+		this.type = type;
+		_sr.sprite = GetSloikFromType(type);
+	}
 
-            case 1:
-            return sloikGrochowka;
+	private Sprite GetSloikFromType(int type){
+		switch(type){
+			case 0:
+				return sloikGolabki;
 
-            case 2:
-            return sloikBigos;
+			case 1:
+				return sloikGrochowka;
 
-            case 3:
-            return sloikSchabowy;
+			case 2:
+				return sloikBigos;
 
-            case 4:
-            return sloikMix;
+			case 3:
+				return sloikSchabowy;
 
-            case 5:
-            return sloikLazanki;
+			case 4:
+				return sloikMix;
 
-            case 6:
-            return sloikParowki;
+			case 5:
+				return sloikLazanki;
 
-            case 7:
-            return sloikMeksyk;
+			case 6:
+				return sloikParowki;
 
-            default:
-            return null;
-        }
-    }
+			case 7:
+				return sloikMeksyk;
+
+			default:
+				return null;
+		}
+	}
 }

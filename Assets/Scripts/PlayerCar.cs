@@ -3,395 +3,329 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerCar : MonoBehaviour
-{
-    public bool alive { get { return hitsLeft > 0; } }
-    public int hitsLeft = 3;
-    public KeyCode lineUp = KeyCode.W;
-    public KeyCode lineDown = KeyCode.S;
-    public Image[] hearts;
-    public Sprite lostHeart;
-    public Sprite heart;
-
-    public Animator gameOverScreen;
-
-    public float[] lanes = new float[] {
-        5.25f,
-        3.1f,
-        1f,
-        -1.1f,
-        -3.25f
-    };
-
-    public int currLane = 2;
-
-    private float mid = 0.25f;
-    private float startPos = 25f;
-    private bool _crashed = false;
-
-    //Effects
-    private float duration = 0f;
-
-    private EnemyManager enemyManager;
-    public bool isImmortal = false;
-
-    private void Start()
-    {
-        GameManager.instance.points = 0;
-        enemyManager = FindObjectOfType<EnemyManager>();
-        UpgradeManager.instance.LoadUpgrades();
-
-        hitsLeft = UpgradeManager.instance.playerLives + UpgradeManager.instance.upgradeLivesLevel;
-
-        for (int i = 0; i < 5; i++)
-        {
-            if (hitsLeft <= i)
-            {
-                hearts[i].enabled = false;
-            }
-        }
-
-        transform.position = new Vector3(-startPos, transform.position.y, transform.position.z);
-        StartCoroutine(PlayerSlideIn());
-    }
-
-    private void Update()
-    {
-        if (alive)
-        {
-            PlayerAliveLogic();
-            if (GameManager.instance.inGame)
-            {
-                GameManager.instance.points++;
-            }
-        }
-        else
-        {
-            if (!_crashed)
-            {
-                _crashed = true;
-                Crashed();
-            }
-        }
-
-        CheckHearts();
-        WearOff();
-    }
-
-    public IEnumerator PlayerSlideOut()
-    {
-        GameManager.instance.inGame = false;
-
-        Vector3 pos = transform.position;
-        pos.x = Mathf.MoveTowards(pos.x, startPos, Time.deltaTime * 6f);
-        transform.position = pos;
-
-        yield return null;
-        if (transform.position.x < startPos)
-        {
-            StartCoroutine(PlayerSlideOut());
-        }
-        else
-        {
-            OnPlayerSlidedOut();
-        }
-    }
-
-    public IEnumerator PlayerSlideIn()
-    {
-        Vector3 pos = transform.position;
-
-        pos.x = Mathf.MoveTowards(pos.x, mid, Time.deltaTime * 3f);
-        transform.position = pos;
-
-        yield return null;
-
-        if (transform.position.x < mid)
-        {
-            StartCoroutine(PlayerSlideIn());
-        }
-        else
-        {
-            OnPlayerSlidedIn();
-        }
-    }
-
-    //called when slide in finishes
-    private void OnPlayerSlidedIn()
-    {
-        GameManager.instance.inGame = true;
-    }
-
-    //called when slide out finishes
-    private void OnPlayerSlidedOut()
-    {
-        gameOverScreen.Play("GameOverPanel");
-        UpgradeManager.instance.SaveUpgrades(); //remove all earned coins
-        FindObjectOfType<MovingRoad>().slowdown = true;
-    }
-
-    public void Crashed()
-    {
-        hitsLeft = -1;
-        FindObjectOfType<MovingRoad>().slowdown = true;
-        GameManager.instance.inGame = false;
-
-        gameOverScreen.Play("GameOverPanel");
-        UpgradeManager.instance.LoadUpgrades(); //remove all earned coins
-
-        StartCoroutine(CrashRoutine());
-    }
-
-    public IEnumerator CrashRoutine()
-    {
-        Vector3 pos = transform.position;
-
-        pos.x = Mathf.MoveTowards(pos.x, -startPos, Time.deltaTime * 5f * FindObjectOfType<MovingRoad>()._currSpeed);
-        transform.position = pos;
-
-        yield return null;
-
-        if (transform.position.x > -11f)
-        {
-            StartCoroutine(CrashRoutine());
-        }
-        else
-        {
-            OnCrashed();
-        }
-    }
-
-    //called when crash animation finishes
-    public void OnCrashed()
-    {
-        Debug.Log("OnCrashed()");
-    }
-
-    private void PlayerAliveLogic()
-    {
-        if (Input.GetKeyDown(lineUp))
-        {
-            currLane--;
-        }
-        if (Input.GetKeyDown(lineDown))
-        {
-            currLane++;
-        }
-
-        CheckLineInBounds();
-
-        if (GameManager.instance.DEBUG)
-        {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                Vector3 pos = transform.position;
-                pos.x = mid;
-                transform.position = pos;
-                StartCoroutine(PlayerSlideOut());
-            }
-
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                Vector3 pos = transform.position;
-                pos.x = -startPos;
-                transform.position = pos;
-                StartCoroutine(PlayerSlideIn());
-            }
-
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                Crashed();
-            }
-
-            if (Input.GetKeyDown(KeyCode.KeypadPlus))
-            {
-                hitsLeft++;
-            }
-
-            if (Input.GetKeyDown(KeyCode.KeypadMinus))
-            {
-                hitsLeft--;
-            }
-        }
-
-        Vector3 playerpos = transform.position;
-        playerpos.y = Mathf.MoveTowards(transform.position.y, lanes[currLane], Time.deltaTime * 9f);
-        if (GameManager.instance.points % 50 == 0) //random car bump
-        {
-            playerpos.y -= 0.05f;
-        }
-        transform.position = playerpos;
-    }
-
-    private void CheckLineInBounds()
-    {
-        if (currLane <= 0)
-        {
-            currLane = 0;
-        }
-
-        if (currLane >= 4)
-        {
-            currLane = 4;
-        }
-    }
-
-    private void CheckHearts()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            if (hitsLeft <= i)
-            {
-                hearts[i].sprite = lostHeart;
-            }
-            else
-            {
-                hearts[i].sprite = heart;
-            }
-        }
-    }
-
-    private void ClearEffects()
-    {
-        isImmortal = false;
-        enemyManager.RestoreEnemySpeed();
-    }
-
-    private void WearOff()
-    {
-        if (duration > 0)
-        {
-            duration -= Time.deltaTime;
-        }
-        else if (duration <= 0)
-        {
-            duration = 0;
-            ClearEffects();
-            enemyManager.RestoreEnemySpeed();
-        }
-    }
-
-    public void Slow()
-    {
-        ClearEffects();
-
-        int effectLevel = UpgradeManager.instance.upgradeLevelGrochowka;
-        switch (effectLevel)
-        {
-            case 0:
-                enemyManager.SpeedUpEnemies(1, 1f);
-                break;
-
-            case 1:
-                enemyManager.SpeedUpEnemies(2, 2f);
-                break;
-
-            case 2:
-                enemyManager.SpeedUpEnemies(3, 3f);
-                break;
-        }
-
-        duration = 3;
-    }
-
-    public void Immortal()
-    {
-        ClearEffects();
-
-        isImmortal = true;
-
-        int effectLevel = UpgradeManager.instance.upgradeLevelSchabowy;
-        switch (effectLevel)
-        {
-            case 0:
-                duration = 1;
-                break;
-
-            case 1:
-                duration = 2;
-                break;
-
-            case 2:
-                duration = 3;
-                break;
-        }
-    }
-
-    public void Explosion(int effectID)
-    {
-        ClearEffects();
-
-        int effectLevel = 0;
-
-        switch (effectID)
-        {
-            case SloikEffectController.EFFECT_EXPLOSION_CIRCLE:
-                effectLevel = UpgradeManager.instance.upgradeLevelBigos;
-                break;
-
-            case SloikEffectController.EFFECT_EXPLOSION_LINES:
-                effectLevel = UpgradeManager.instance.upgradeLevelMeksyk;
-                break;
-        }
-
-        switch (effectLevel)
-        {
-            case 0:
-                TakeHeart(1);
-                break;
-
-            case 1:
-                TakeHeart(2);
-                break;
-
-            case 2:
-                TakeHeart(3);
-                break;
-        }
-    }
-
-    public void Bird()
-    {
-        return;//no effect
-    }
-
-    public void LifeUp()
-    {
-        ClearEffects();
-
-        int effectLevel = UpgradeManager.instance.upgradeLevelLazanki;
-        switch (effectLevel)
-        {
-            case 0:
-                AddHeart(1);
-                break;
-
-            case 1:
-                AddHeart(2);
-                break;
-
-            case 2:
-                AddHeart(3);
-                break;
-        }
-    }
-
-    public void InstatKill()
-    {
-        ClearEffects();
-        TakeHeart(hitsLeft);
-    }
-
-    public void AddHeart(int number)
-    {
-        hitsLeft += number;
-    }
-
-    public void TakeHeart(int number)
-    {
-        if (!isImmortal)
-        {
-            hitsLeft -= number;
-        }
-    }
+public class PlayerCar : MonoBehaviour{
+	private bool Alive => hitsLeft > 0;
+
+	public int hitsLeft = 3;
+	public KeyCode lineUp = KeyCode.W;
+	public KeyCode lineDown = KeyCode.S;
+	public Image[] hearts;
+	public Sprite lostHeart;
+	public Sprite heart;
+
+	public Animator gameOverScreen;
+
+	public float[] lanes ={5.25f, 3.1f, 1f, -1.1f, -3.25f};
+
+	public int currLane = 2;
+
+	private float mid = 0.25f;
+	private float startPos = 25f;
+	private bool _crashed;
+
+	//Effects
+	private float _duration;
+
+	private EnemyManager _enemyManager;
+	public bool isImmortal;
+
+	private void Start(){
+		GameManager.Instance.points = 0;
+		_enemyManager = FindObjectOfType<EnemyManager>();
+		UpgradeManager.Instance.LoadUpgrades();
+
+		hitsLeft = UpgradeManager.Instance.playerLives + UpgradeManager.Instance.upgradeLivesLevel;
+
+		for(var i = 0; i < 5; i++){
+			if(hitsLeft <= i){
+				hearts[i].enabled = false;
+			}
+		}
+
+		var transform1 = transform;
+		var position = transform1.position;
+		position = new Vector3(-startPos, position.y, position.z);
+		transform1.position = position;
+		StartCoroutine(PlayerSlideIn());
+	}
+
+	private void Update(){
+		if(Alive){
+			PlayerAliveLogic();
+			if(GameManager.Instance.inGame){
+				GameManager.Instance.points++;
+			}
+		} else{
+			if(!_crashed){
+				_crashed = true;
+				Crashed();
+			}
+		}
+
+		CheckHearts();
+		WearOff();
+	}
+
+	public IEnumerator PlayerSlideOut(){
+		GameManager.Instance.inGame = false;
+
+		var pos = transform.position;
+		pos.x = Mathf.MoveTowards(pos.x, startPos, Time.deltaTime * 6f);
+		transform.position = pos;
+
+		yield return null;
+		if(transform.position.x < startPos){
+			StartCoroutine(PlayerSlideOut());
+		} else{
+			OnPlayerSlidedOut();
+		}
+	}
+
+	private IEnumerator PlayerSlideIn(){
+		var pos = transform.position;
+
+		pos.x = Mathf.MoveTowards(pos.x, mid, Time.deltaTime * 3f);
+		transform.position = pos;
+
+		yield return null;
+
+		if(transform.position.x < mid){
+			StartCoroutine(PlayerSlideIn());
+		} else{
+			OnPlayerSlidedIn();
+		}
+	}
+
+	//called when slide in finishes
+	private void OnPlayerSlidedIn(){
+		GameManager.Instance.inGame = true;
+	}
+
+	//called when slide out finishes
+	private void OnPlayerSlidedOut(){
+		gameOverScreen.Play("GameOverPanel");
+		UpgradeManager.Instance.SaveUpgrades(); //remove all earned coins
+		FindObjectOfType<MovingRoad>().slowdown = true;
+	}
+
+	private void Crashed(){
+		hitsLeft = -1;
+		FindObjectOfType<MovingRoad>().slowdown = true;
+		GameManager.Instance.inGame = false;
+
+		gameOverScreen.Play("GameOverPanel");
+		UpgradeManager.Instance.LoadUpgrades(); //remove all earned coins
+
+		StartCoroutine(CrashRoutine());
+	}
+
+	private IEnumerator CrashRoutine(){
+		var pos = transform.position;
+
+		pos.x = Mathf.MoveTowards(pos.x, -startPos, Time.deltaTime * 5f * FindObjectOfType<MovingRoad>().currSpeed);
+		transform.position = pos;
+
+		yield return null;
+
+		if(transform.position.x > -11f){
+			StartCoroutine(CrashRoutine());
+		} else{
+			OnCrashed();
+		}
+	}
+
+	//called when crash animation finishes
+	private void OnCrashed(){
+		Debug.Log("OnCrashed()");
+	}
+
+	private void PlayerAliveLogic(){
+		if(Input.GetKeyDown(lineUp)){
+			currLane--;
+		}
+
+		if(Input.GetKeyDown(lineDown)){
+			currLane++;
+		}
+
+		CheckLineInBounds();
+
+		var transform1 = transform;
+		if(GameManager.DEBUG){
+			if(Input.GetKeyDown(KeyCode.P)){
+				var pos = transform1.position;
+				pos.x = mid;
+				transform1.position = pos;
+				StartCoroutine(PlayerSlideOut());
+			}
+
+			if(Input.GetKeyDown(KeyCode.O)){
+				var pos = transform.position;
+				pos.x = -startPos;
+				transform1.position = pos;
+				StartCoroutine(PlayerSlideIn());
+			}
+
+			if(Input.GetKeyDown(KeyCode.I)){
+				Crashed();
+			}
+
+			if(Input.GetKeyDown(KeyCode.KeypadPlus)){
+				hitsLeft++;
+			}
+
+			if(Input.GetKeyDown(KeyCode.KeypadMinus)){
+				hitsLeft--;
+			}
+		}
+
+		var playerpos = transform.position;
+		playerpos.y = Mathf.MoveTowards(transform1.position.y, lanes[currLane], Time.deltaTime * 9f);
+		if(GameManager.Instance.points % 50 == 0){ //random car bump
+			playerpos.y -= 0.05f;
+		}
+
+		transform.position = playerpos;
+	}
+
+	private void CheckLineInBounds(){
+		if(currLane <= 0){
+			currLane = 0;
+		}
+
+		if(currLane >= 4){
+			currLane = 4;
+		}
+	}
+
+	private void CheckHearts(){
+		for(var i = 0; i < 5; i++){
+			hearts[i].sprite = hitsLeft <= i ? lostHeart : heart;
+		}
+	}
+
+	private void ClearEffects(){
+		isImmortal = false;
+		_enemyManager.RestoreEnemySpeed();
+	}
+
+	private void WearOff(){
+		if(_duration > 0){
+			_duration -= Time.deltaTime;
+		} else if(_duration <= 0){
+			_duration = 0;
+			ClearEffects();
+			_enemyManager.RestoreEnemySpeed();
+		}
+	}
+
+	public void Slow(){
+		ClearEffects();
+
+		var effectLevel = UpgradeManager.Instance.upgradeLevelGrochowka;
+		switch(effectLevel){
+			case 0:
+				_enemyManager.SpeedUpEnemies(1, 1f);
+				break;
+
+			case 1:
+				_enemyManager.SpeedUpEnemies(2, 2f);
+				break;
+
+			case 2:
+				_enemyManager.SpeedUpEnemies(3, 3f);
+				break;
+		}
+
+		_duration = 3;
+	}
+
+	public void Immortal(){
+		ClearEffects();
+
+		isImmortal = true;
+
+		var effectLevel = UpgradeManager.Instance.upgradeLevelSchabowy;
+		switch(effectLevel){
+			case 0:
+				_duration = 1;
+				break;
+
+			case 1:
+				_duration = 2;
+				break;
+
+			case 2:
+				_duration = 3;
+				break;
+		}
+	}
+
+	public void Explosion(int effectID){
+		ClearEffects();
+
+		var effectLevel = 0;
+
+		switch(effectID){
+			case SloikEffectController.EFFECT_EXPLOSION_CIRCLE:
+				effectLevel = UpgradeManager.Instance.upgradeLevelBigos;
+				break;
+
+			case SloikEffectController.EFFECT_EXPLOSION_LINES:
+				effectLevel = UpgradeManager.Instance.upgradeLevelMeksyk;
+				break;
+		}
+
+		switch(effectLevel){
+			case 0:
+				TakeHeart(1);
+				break;
+
+			case 1:
+				TakeHeart(2);
+				break;
+
+			case 2:
+				TakeHeart(3);
+				break;
+		}
+	}
+
+	public void Bird(){
+		return; //no effect
+	}
+
+	public void LifeUp(){
+		ClearEffects();
+
+		var effectLevel = UpgradeManager.Instance.upgradeLevelLazanki;
+		switch(effectLevel){
+			case 0:
+				AddHeart(1);
+				break;
+
+			case 1:
+				AddHeart(2);
+				break;
+
+			case 2:
+				AddHeart(3);
+				break;
+		}
+	}
+
+	public void InstaKill(){
+		ClearEffects();
+		TakeHeart(hitsLeft);
+	}
+
+	private void AddHeart(int number){
+		hitsLeft += number;
+	}
+
+	public void TakeHeart(int number){
+		if(!isImmortal){
+			hitsLeft -= number;
+		}
+	}
 }
