@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UpgradeManager : Singleton<UpgradeManager>{
-	public int coins = 0;
+public class UpgradeManager{
+	
+	public int coins;
 
 	public int playerLives = 3;
 	public int upgradeLivesLevel; //0 - 1lvl, 1 - 2lvl, 2 - 3lvl
@@ -27,37 +26,7 @@ public class UpgradeManager : Singleton<UpgradeManager>{
 	private const string EFFECT_PAROWKI_UPGRADE = "parowkiUpgrade";
 	private const string EFFECT_MEKSYK_UPGRADE = "meksykUpgrade";
 
-	public bool RemoveCoins(int amount){
-		if(Mathf.Abs(amount) > coins){
-			Debug.Log("You can't afford that!");
-			return false;
-		}
-
-		coins -= Mathf.Abs(amount);
-		return true;
-	}
-
-	public void AddCoins(int amount){
-		coins += amount;
-		if(GameManager.Instance.inGame){
-			GameManager.Instance.points += 100;
-		}
-
-		Debug.Log("Added " + amount + " coins. Now having " + coins);
-	}
-
-	public int GetUpgradePrice(int level){
-		if(level == 0){
-			return 10;
-		}
-
-		var b = 10;
-		var r = 10;
-		for(var i = 0; i < level; i++){
-			r *= b;
-		}
-
-		return r;
+	public UpgradeManager(){
 	}
 
 	public void LoadUpgrades(){

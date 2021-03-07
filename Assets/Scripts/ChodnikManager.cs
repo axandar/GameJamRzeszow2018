@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChodnikManager : MonoBehaviour{
+
+	[SerializeField] private GameManager gameManager;
+	
 	public Transform detailParent;
 	public GameObject[] details;
 
@@ -21,7 +24,7 @@ public class ChodnikManager : MonoBehaviour{
 		} else{
 			_cooldown = UnityEngine.Random.Range(minCooldownBetweenDetails, maxCooldownBetweenDetails);
 
-			if(GameManager.Instance.inGame){
+			if(gameManager.inGame){
 				SpawnRandomDetail();
 			}
 		}

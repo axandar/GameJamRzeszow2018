@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Enemy;
+using Player;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour{
@@ -27,7 +29,7 @@ public class Obstacle : MonoBehaviour{
 			col.gameObject.GetComponent<PlayerCar>().TakeHeart(1);
 			col.gameObject.GetComponent<PlayerCar>().Immortal();
 		} else if(layer == LayerMask.NameToLayer("Enemy")){
-			col.GetComponent<EnemyControler>().Kill();
+			col.GetComponent<EnemyController>().Kill();
 			Destroy(gameObject);
 		}
 	}

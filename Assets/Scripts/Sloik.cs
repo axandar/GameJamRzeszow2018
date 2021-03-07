@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sloik : MonoBehaviour{
+
+	[SerializeField] private UpgradeManager upgradeManager;
+	
 	public float rotateSpeed = 350f;
 	public float flySpeed = 25f;
 	public float nearScale = 1f;
@@ -68,7 +71,7 @@ public class Sloik : MonoBehaviour{
 
 		if(type == SloikEffectController.EFFECT_BIRD){
 			var birdsNumber = 0;
-			switch(UpgradeManager.Instance.upgradeLevelGolabki){
+			switch(upgradeManager.upgradeLevelGolabki){
 				case 0:
 					birdsNumber = 2;
 					break;

@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Enemy;
+using Player;
 using UnityEngine;
 
 public class SloikEffectController : MonoBehaviour{
+	[SerializeField] private UpgradeManager upgradeManager;
+
 	public const int EFFECT_SLOW = 1;
 	public const int EFFECT_BIRD = 0;
 	public const int EFFECT_EXPLOSION_CIRCLE = 2;
@@ -34,7 +38,7 @@ public class SloikEffectController : MonoBehaviour{
 		_rigidBody = GetComponent<Rigidbody2D>();
 		_spriteRendere = GetComponent<SpriteRenderer>();
 	}
-	
+
 	void Update(){
 		EffectWearOff();
 
@@ -71,7 +75,7 @@ public class SloikEffectController : MonoBehaviour{
 				SetSprite(effectGolabki);
 				SetSize(1f, 1f);
 				_isBird = true;
-				float rotation = UnityEngine.Random.Range(1, UpgradeManager.Instance.upgradeLevelGolabki - 1);
+				float rotation = Random.Range(1, upgradeManager.upgradeLevelGolabki - 1);
 				rotation = 360f / rotation;
 				transform.Rotate(new Vector3(0, 0, 45f));
 				break;
@@ -115,7 +119,7 @@ public class SloikEffectController : MonoBehaviour{
 	public void OnTriggerEnter2D(Collider2D col){
 		var layer = col.gameObject.layer;
 		if(layer == LayerMask.NameToLayer("Enemy")){
-			var enemyController = col.gameObject.GetComponent<EnemyControler>();
+			var enemyController = col.gameObject.GetComponent<EnemyController>();
 			OnEnemyContact(enemyController);
 		} else if(layer == LayerMask.NameToLayer("Player")){
 			var playerControler = col.gameObject.GetComponent<PlayerCar>();
@@ -123,29 +127,29 @@ public class SloikEffectController : MonoBehaviour{
 		}
 	}
 
-	void OnEnemyContact(EnemyControler enemyControler){
+	void OnEnemyContact(EnemyController enemyController){
 		Debug.Log(effect);
 		switch(effect){
 			case EFFECT_SLOW:
-				enemyControler.Slow();
+				enemyController.Slow();
 				break;
 			case EFFECT_BIRD:
-				enemyControler.Bird();
+				enemyController.Bird();
 				break;
 			case EFFECT_EXPLOSION_CIRCLE:
-				enemyControler.Explosion();
+				enemyController.Explosion();
 				break;
 			case EFFECT_IMMORTAL:
-				enemyControler.Immortal();
+				enemyController.Immortal();
 				break;
 			case EFFECT_LIFE_UP:
-				enemyControler.LifeUp();
+				enemyController.LifeUp();
 				break;
 			case EFFECT_INSTANT_KILL:
-				enemyControler.InstaKill();
+				enemyController.InstaKill();
 				break;
 			case EFFECT_EXPLOSION_LINES:
-				enemyControler.Explosion();
+				enemyController.Explosion();
 				break;
 		}
 	}
@@ -156,7 +160,6 @@ public class SloikEffectController : MonoBehaviour{
 				playerController.Slow();
 				break;
 			case EFFECT_BIRD:
-				playerController.Bird();
 				break;
 			case EFFECT_EXPLOSION_CIRCLE:
 				playerController.Explosion(effect);
@@ -182,6 +185,7 @@ public class SloikEffectController : MonoBehaviour{
 			if(number == EFFECT_RANDOM){
 				continue;
 			}
+
 			return number;
 		}
 	}

@@ -3,65 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UpgradeUi : MonoBehaviour{
+
+	[SerializeField] private GameManager gameManager;
+	
 	public void BigosUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelBigos++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelBigos++;
 		}
 
 		Reload();
 	}
 
 	public void GolabkiUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelGolabki++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelGolabki++;
 		}
 
 		Reload();
 	}
 
 	public void GrochowaUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelGrochowka++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelGrochowka++;
 		}
 
 		Reload();
 	}
 
 	public void LazankiUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelLazanki++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelLazanki++;
 		}
 
 		Reload();
 	}
 
 	public void MeksykUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelMeksyk++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelMeksyk++;
 		}
 
 		Reload();
 	}
 
 	public void ParowkiUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelParowki++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelParowki++;
 		}
 
 		Reload();
 	}
 
 	public void SchabowyUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLevelSchabowy++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelSchabowy++;
 		}
 
 		Reload();
 	}
 
 	public void LivesUpgrade(){
-		if(UpgradeManager.Instance.RemoveCoins(10)){
-			UpgradeManager.Instance.upgradeLivesLevel++;
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLivesLevel++;
 		}
 
 		Reload();

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour{
+
+	[SerializeField] private GameManager gameManager;
+	
 	public GameObject narrowRoadUp; //0
 	public GameObject narrowRoadDown; //1
 	public GameObject roadWorks; //2
@@ -25,7 +28,7 @@ public class ObstacleManager : MonoBehaviour{
 		} else{
 			_cooldown = UnityEngine.Random.Range(minCooldownBetweenObstacles, maxCooldownBetweenObstacles);
 
-			if(GameManager.Instance.inGame){
+			if(gameManager.inGame){
 				SpawnRandomObstacle();
 			}
 		}

@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOverPanel : MonoBehaviour{
+
+	[SerializeField] private GameManager gameManager;
+	
 	public void Restart(){
-		GameManager.Instance.inGame = false;
-		GameManager.Instance.timer = 120f;
+		gameManager.inGame = false;
+		gameManager.timer = 120f;
 		SceneManager.LoadSceneAsync("RoadGame");
 	}
 

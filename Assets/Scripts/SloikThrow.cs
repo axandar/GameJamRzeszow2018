@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SloikThrow : MonoBehaviour{
+
+	[SerializeField] private GameManager gameManager;
+	
 	public GameObject sloikPrefab;
 	public float cooldown = 1f;
 	public int currSloik = 6;
@@ -36,7 +39,7 @@ public class SloikThrow : MonoBehaviour{
 			_cooldown -= Time.deltaTime;
 		}
 
-		if(!Input.GetMouseButtonDown(0) || !GameManager.Instance.inGame || !(_cooldown <= 0f)){
+		if(!Input.GetMouseButtonDown(0) || !gameManager.inGame || !(_cooldown <= 0f)){
 			return;
 		}
 		_cooldown = cooldown;

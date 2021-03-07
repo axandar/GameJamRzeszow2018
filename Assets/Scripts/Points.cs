@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Points : MonoBehaviour{
+
+	[SerializeField] private GameManager gameManager;
+	
 	private Text _pointText;
 
 	public void Start(){
@@ -11,6 +14,6 @@ public class Points : MonoBehaviour{
 	}
 
 	public void Update(){
-		_pointText.text = GameManager.Instance.points.ToString();
+		_pointText.text = gameManager.points.ToString();
 	}
 }
