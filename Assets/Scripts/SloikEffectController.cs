@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Enemy;
+﻿using Enemy;
 using Player;
 using UnityEngine;
 

@@ -170,10 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9d588aa9430984ba98e2d74aef5847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   speed: 0
-  life: 0
-  isDead: 0
-  roadLine: {fileID: 0}
-  coinValue: 1
-  sprites: []
+  sprites:
+  - {fileID: 21300000, guid: 8c27fcd8256cc5542af0f4e73d4a07d0, type: 3}

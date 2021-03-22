@@ -31,6 +31,7 @@ namespace Enemy{
 			_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
 			var random = Random.Range(0, sprites.Length - 1);
+			
 			_spriteRenderer.sprite = sprites[random];
 		}
 

@@ -2,7 +2,6 @@
 using System.Collections;
 using Enemy;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Player{
 	public class PlayerCar{
