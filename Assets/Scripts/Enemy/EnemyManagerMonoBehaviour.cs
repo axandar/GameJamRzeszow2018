@@ -18,7 +18,7 @@ namespace Enemy{
 		}
 
 		private void Update(){
-			if(!gameManager.inGame){
+			if(!gameManager.InGame){
 				return;
 			}
 			_enemyManager.Tick(InstantiateEnemy, InstantiateKaretka);

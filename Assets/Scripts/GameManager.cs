@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour{
 
-	public long points;
-	public bool inGame;
-	public float timer = 120f;
-
+	[SerializeField] private long points;
+	[SerializeField] private bool inGame;
+	[SerializeField] private float timer = 120f;
+	[SerializeField] private float[] lanes = {5.25f, 3.1f, 1f, -1.1f, -3.25f};
+	
 	private void Awake(){
 		UpgradeManager = new UpgradeManager();
 		UpgradeManager.LoadUpgrades();
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour{
 	
 	public bool RemoveCoins(int amount){
 		if(Mathf.Abs(amount) > UpgradeManager.coins){
-			UnityEngine.Debug.Log("You can't afford that!");
+			Debug.Log("You can't afford that!");
 			return false;
 		}
 
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour{
 			points += 100;
 		}
 
-		UnityEngine.Debug.Log("Added " + amount + " coins. Now having " + 
+		Debug.Log("Added " + amount + " coins. Now having " + 
 			UpgradeManager.coins);
 	}
 
@@ -57,4 +58,18 @@ public class GameManager : MonoBehaviour{
 	public EnemyManager EnemyManager{ get; private set; }
 
 	public PlayerCar PlayerCar{ get; private set; }
+
+	public float Timer => timer;
+
+	public float[] Lanes => lanes;
+
+	public bool InGame{
+		get => inGame;
+		set => inGame = value;
+	}
+
+	public long Points{
+		get => points;
+		set => points = value;
+	}
 }

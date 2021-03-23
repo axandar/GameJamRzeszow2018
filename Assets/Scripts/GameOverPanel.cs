@@ -8,8 +8,7 @@ public class GameOverPanel : MonoBehaviour{
 	[SerializeField] private GameManager gameManager;
 	
 	public void Restart(){
-		gameManager.inGame = false;
-		gameManager.timer = 120f;
+		gameManager.InGame = false;
 		SceneManager.LoadSceneAsync("RoadGame");
 	}
 

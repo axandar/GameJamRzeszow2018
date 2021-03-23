@@ -5,29 +5,34 @@ using Player;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour{
-	public float speed = 5f;
+	[SerializeField] private float speed = 5f;
 	private Rigidbody2D _rb;
+	private PlayerCar _playerCar;
 
-	private void Awake(){
+	private void Start(){
 		_rb = GetComponent<Rigidbody2D>();
+	}
+
+	public void Initialize(PlayerCar playerCar){
+		_playerCar = playerCar;
 	}
 
 	// Update is called once per frame
 	private void Update(){
-		var roadSpeed = FindObjectOfType<MovingRoad>().currSpeed;
-
 		var position = transform.position;
-		_rb.MovePosition(new Vector3(position.x - speed * Time.deltaTime * speed, position.y, 0f));
+		_rb.MovePosition(new Vector3(position.x - speed * Time.deltaTime * speed,
+			position.y, 0f));
 		if(transform.position.x < -100f){
 			Destroy(gameObject);
 		}
 	}
-
+	
 	private void OnTriggerEnter2D(Collider2D col){
 		var layer = col.gameObject.layer;
 		if(layer == LayerMask.NameToLayer("Player")){
-			col.gameObject.GetComponent<PlayerCar>().TakeHeart(1);
-			col.gameObject.GetComponent<PlayerCar>().Immortal();
+			_playerCar.TakeHeart(1);
+			_playerCar.Immortal();
+			Destroy(gameObject);
 		} else if(layer == LayerMask.NameToLayer("Enemy")){
 			col.GetComponent<EnemyController>().Kill();
 			Destroy(gameObject);

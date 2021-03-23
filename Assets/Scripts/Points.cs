@@ -14,6 +14,6 @@ public class Points : MonoBehaviour{
 	}
 
 	public void Update(){
-		_pointText.text = gameManager.points.ToString();
+		_pointText.text = gameManager.Points.ToString();
 	}
 }

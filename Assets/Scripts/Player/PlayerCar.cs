@@ -27,7 +27,7 @@ namespace Player{
 		}
 
 		public void Initialize(){
-			_gameManager.points = 0;
+			_gameManager.Points = 0;
 			var upgradeManager = _gameManager.UpgradeManager;
 			HitsLeft = upgradeManager.playerLives + upgradeManager.upgradeLivesLevel;
 		}
@@ -39,13 +39,13 @@ namespace Player{
 		}
 
 		public void Tick(){
-			if(!_gameManager.inGame){
+			if(!_gameManager.InGame){
 				return;
 			}
 
 			IsAlive = HitsLeft > 0;
 			if(IsAlive){
-				_gameManager.points++;
+				_gameManager.Points++;
 			} else{
 				PlayerCrashed();
 			}
@@ -67,7 +67,7 @@ namespace Player{
 		}
 
 		private void PlayerCrashed(){
-			_gameManager.inGame = false;
+			_gameManager.InGame = false;
 		}
 
 		public void MovePlayerByXLanes(int numberOfLanes){

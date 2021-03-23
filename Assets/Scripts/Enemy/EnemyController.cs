@@ -60,10 +60,11 @@ namespace Enemy{
 		public void OnTriggerEnter2D(Collider2D col){
 			var layer = col.gameObject.layer;
 			if(layer == LayerMask.NameToLayer("Player")){
-				col.GetComponent<PlayerCar>().TakeHeart(1);
+				_gameManager.PlayerCar.TakeHeart(1);
 				_enemyManager.spawnedEnemies.Remove(this);
 				Destroy(gameObject);
-			} else if(layer == LayerMask.NameToLayer("Enemy") || layer == LayerMask.NameToLayer("Obstacle")){
+			} else if(layer == LayerMask.NameToLayer("Enemy") || 
+				layer == LayerMask.NameToLayer("Obstacle")){
 				_enemyManager.spawnedEnemies.Remove(this);
 				Destroy(gameObject);
 			}

@@ -4,8 +4,8 @@ using UnityEngine.UI;
 namespace Player{
 	public class PlayerCarMonoBehaviour : MonoBehaviour{
 		
-		private const KeyCode EFFECT_LINE_UP = KeyCode.W;
-		private const KeyCode EFFECT_LINE_DOWN = KeyCode.S;
+		private const KeyCode LineUp = KeyCode.W;
+		private const KeyCode LineDown = KeyCode.S;
 
 		[SerializeField] private GameManager gameManager;
 		[SerializeField] private Image[] hearts;
@@ -32,15 +32,16 @@ namespace Player{
 
 		private void SetPlayerOnStart(){
 			PlayerCar.SetStartingPosition(transform, startPos);
-			StartCoroutine(_playerCar.PlayerSlide(transform, mid, 3f, OnPlayerSlidedIn));
+			StartCoroutine(_playerCar.PlayerSlide(transform, mid, 3f, 
+				OnPlayerSlidedIn));
 		}
 		
 		private void OnPlayerSlidedIn(){
-			gameManager.inGame = true;
+			gameManager.InGame = true;
 		}
 		
 		private void Update(){
-			if(gameManager.timer == 0){
+			if(gameManager.Timer == 0){
 				GameEnd();
 			}
 			CheckHearts();
@@ -48,12 +49,12 @@ namespace Player{
 				GameEnd();
 			}
 			
-			if(Input.GetKeyDown(EFFECT_LINE_UP)){
-				_playerCar.MovePlayerByXLanes(1);
+			if(Input.GetKeyDown(LineUp)){
+				_playerCar.MovePlayerByXLanes(-1);
 			}
 
-			if(Input.GetKeyDown(EFFECT_LINE_DOWN)){
-				_playerCar.MovePlayerByXLanes(-1);
+			if(Input.GetKeyDown(LineDown)){
+				_playerCar.MovePlayerByXLanes(1);
 			}
 
 			_playerCar.Tick();

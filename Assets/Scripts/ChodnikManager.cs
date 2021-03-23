@@ -22,9 +22,10 @@ public class ChodnikManager : MonoBehaviour{
 		if(_cooldown > 0f){
 			_cooldown -= Time.deltaTime;
 		} else{
-			_cooldown = UnityEngine.Random.Range(minCooldownBetweenDetails, maxCooldownBetweenDetails);
+			_cooldown = UnityEngine.Random.Range(minCooldownBetweenDetails, 
+				maxCooldownBetweenDetails);
 
-			if(gameManager.inGame){
+			if(gameManager.InGame){
 				SpawnRandomDetail();
 			}
 		}
@@ -33,6 +34,7 @@ public class ChodnikManager : MonoBehaviour{
 	private void SpawnRandomDetail(){
 		var random = UnityEngine.Random.Range(0, details.Length);
 		var detail = Instantiate(details[random], 
-			new Vector3(Screen.width + 100, 25, 0), Quaternion.identity, detailParent);
+			new Vector3(Screen.width + 100, 25, 0), 
+			Quaternion.identity, detailParent);
 	}
 }

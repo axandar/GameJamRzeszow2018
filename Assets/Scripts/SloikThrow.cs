@@ -39,7 +39,7 @@ public class SloikThrow : MonoBehaviour{
 			_cooldown -= Time.deltaTime;
 		}
 
-		if(!Input.GetMouseButtonDown(0) || !gameManager.inGame || !(_cooldown <= 0f)){
+		if(!Input.GetMouseButtonDown(0) || !gameManager.InGame || !(_cooldown <= 0f)){
 			return;
 		}
 		_cooldown = cooldown;
