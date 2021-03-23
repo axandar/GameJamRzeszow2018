@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Sloik : MonoBehaviour{
 
-	[SerializeField] private UpgradeManager upgradeManager;
-	
 	public float rotateSpeed = 350f;
 	public float flySpeed = 25f;
 	public float nearScale = 1f;
@@ -28,13 +26,19 @@ public class Sloik : MonoBehaviour{
 	public Sprite sloikMeksyk; //7
 
 	private SpriteRenderer _sr;
-	public GameObject sloikEffectPrefab;
+	public SloikEffectController sloikEffectPrefab;
+
+	private GameManager _gameManager;
 
 	private void Awake(){
 		_sr = GetComponent<SpriteRenderer>();
 		_sr.sprite = sloikParowki;
 
 		initialPos = transform.position;
+	}
+
+	public void Initialize(GameManager gameManager){
+		_gameManager = gameManager;
 	}
 
 	private void Update(){
@@ -70,29 +74,16 @@ public class Sloik : MonoBehaviour{
 		var actualPosition = gameObject.transform.position;
 
 		if(type == SloikEffectController.EFFECT_BIRD){
-			var birdsNumber = 0;
-			switch(upgradeManager.upgradeLevelGolabki){
-				case 0:
-					birdsNumber = 2;
-					break;
-				case 1:
-					birdsNumber = 3;
-					break;
-				case 2:
-					birdsNumber = 4;
-					break;
-			}
-
-			Debug.Log(birdsNumber);
+			var birdsNumber = 2;
 			for(int i = 0; i < birdsNumber; i++){
 				var sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-				var effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-				effectController.SetSloikEffect(type);
+				sloikEffectObject.Initialize(_gameManager);
+				sloikEffectObject.SetSloikEffect(type);
 			}
 		} else{
 			var sloikEffectObject = Instantiate(sloikEffectPrefab, actualPosition, Quaternion.identity);
-			var effectController = sloikEffectObject.GetComponent<SloikEffectController>();
-			effectController.SetSloikEffect(type);
+			sloikEffectObject.Initialize(_gameManager);
+			sloikEffectObject.SetSloikEffect(type);
 		}
 
 		Destroy(gameObject);

@@ -22,10 +22,14 @@ public class Timeleft : MonoBehaviour{
 	}
 
 	private void Update(){
-		var mins = (int) Mathf.Floor(gameManager.Timer / 60f);
-		var secs = (int) (gameManager.Timer - mins * 60f);
-		_t.text = mins.ToString("00") + ":" + secs.ToString("00");
+		_t.text = TextFromTimer(gameManager.Timer);
 
 		_s.value = (_timer - gameManager.Timer) / 100f;
+	}
+
+	public static string TextFromTimer(float timer){
+		var minutes = (int) Mathf.Floor(timer / 60f);
+		var seconds = (int) (timer - minutes * 60f);
+		return minutes.ToString("00") + ":" + seconds.ToString("00");
 	}
 }

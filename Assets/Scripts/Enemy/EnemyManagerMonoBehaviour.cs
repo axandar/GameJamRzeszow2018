@@ -7,11 +7,10 @@ namespace Enemy{
 	public class EnemyManagerMonoBehaviour : MonoBehaviour{
 
 		[SerializeField] private GameManager gameManager;
-		public GameObject enemyPrefab;
-		public GameObject karetkaCar;
+		[SerializeField] private GameObject enemyPrefab;
+		[SerializeField] private GameObject karetkaCar;
 
 		private EnemyManager _enemyManager;
-
 
 		private void Start(){
 			_enemyManager = gameManager.EnemyManager;
@@ -40,5 +39,11 @@ namespace Enemy{
 					DrawLineNumber()), Quaternion.identity)
 				.GetComponent<EnemyController>();
 		}
+
+		public GameManager GameManager => gameManager;
+
+		public GameObject EnemyPrefab => enemyPrefab;
+
+		public GameObject KaretkaCar => karetkaCar;
 	}
 }

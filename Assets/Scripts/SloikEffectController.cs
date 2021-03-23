@@ -3,7 +3,6 @@ using Player;
 using UnityEngine;
 
 public class SloikEffectController : MonoBehaviour{
-	[SerializeField] private GameManager gameManager;
 
 	public const int EFFECT_SLOW = 1;
 	public const int EFFECT_BIRD = 0;
@@ -27,9 +26,14 @@ public class SloikEffectController : MonoBehaviour{
 
 	private SpriteRenderer _spriteRendere;
 	private bool _isBird;
+	private GameManager _gameManager;
 
 	private void Awake(){
 		_spriteRendere = GetComponent<SpriteRenderer>();
+	}
+
+	public void Initialize(GameManager gameManager){
+		_gameManager = gameManager;
 	}
 
 	void Update(){
@@ -112,7 +116,7 @@ public class SloikEffectController : MonoBehaviour{
 			var enemyController = col.gameObject.GetComponent<EnemyController>();
 			OnEnemyContact(enemyController);
 		} else if(layer == LayerMask.NameToLayer("Player")){
-			OnPlayerContact(gameManager.PlayerCar);
+			OnPlayerContact(_gameManager.PlayerCar);
 		}
 	}
 

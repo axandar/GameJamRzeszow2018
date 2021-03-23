@@ -54,7 +54,8 @@ namespace Player{
 		}
 
 		// ReSharper disable once MemberCanBeMadeStatic.Global
-		public IEnumerator PlayerSlide(Transform transform, float target, float speed, Action callback){
+		public IEnumerator PlayerSlide(Transform transform, float target, float speed,
+			Action callback){
 			while(transform.position.x < target){
 				var pos = transform.position;
 

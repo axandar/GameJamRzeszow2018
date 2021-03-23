@@ -7,7 +7,7 @@ public class SloikThrow : MonoBehaviour{
 
 	[SerializeField] private GameManager gameManager;
 	
-	public GameObject sloikPrefab;
+	public Sloik sloikPrefab;
 	public float cooldown = 1f;
 	public int currSloik = 6;
 	public GameObject objectUI;
@@ -46,6 +46,7 @@ public class SloikThrow : MonoBehaviour{
 
 		_mousePos = Input.mousePosition;
 		var sloik = Instantiate(sloikPrefab, transform.position, Quaternion.identity);
+		sloik.Initialize(gameManager);
 		var sloikComponent = sloik.GetComponent<Sloik>();
 		sloikComponent.SetTarget(Camera.main.ScreenToWorldPoint(_mousePos));
 		sloikComponent.SetType(currSloik);

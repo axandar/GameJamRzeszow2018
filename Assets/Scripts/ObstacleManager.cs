@@ -6,13 +6,11 @@ using UnityEngine;
 public class ObstacleManager : MonoBehaviour{
 
 	[SerializeField] private GameManager gameManager;
-	
-	public Obstacle narrowRoadUp; //0
-	public Obstacle narrowRoadDown; //1
-	public Obstacle roadWorks; //2
-
-	public float minCooldownBetweenObstacles = 1f;
-	public float maxCooldownBetweenObstacles = 6f;
+	[SerializeField] private Obstacle narrowRoadUp;
+	[SerializeField] private Obstacle narrowRoadDown;
+	[SerializeField] private Obstacle roadWorks;
+	[SerializeField] private  float minCooldownBetweenObstacles = 1f;
+	[SerializeField] private  float maxCooldownBetweenObstacles = 6f;
 
 	private float _cooldown;
 
@@ -56,4 +54,16 @@ public class ObstacleManager : MonoBehaviour{
 		var instance = Instantiate(obstacle, position, Quaternion.identity);
 		instance.Initialize(gameManager.PlayerCar);
 	}
+
+	public GameManager GameManager => gameManager;
+
+	public Obstacle NarrowRoadUp => narrowRoadUp;
+
+	public Obstacle NarrowRoadDown => narrowRoadDown;
+
+	public Obstacle RoadWorks => roadWorks;
+
+	public float MINCooldownBetweenObstacles => minCooldownBetweenObstacles;
+
+	public float MAXCooldownBetweenObstacles => maxCooldownBetweenObstacles;
 }

@@ -654,7 +654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1199107053}
-  sloikPrefab: {fileID: 1065122756295114, guid: f49552825d7ec664cb71b40a557903cf,
+  sloikPrefab: {fileID: 114012856924141474, guid: f49552825d7ec664cb71b40a557903cf,
     type: 3}
   cooldown: 1
   currSloik: 6
@@ -1389,9 +1389,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1199107053}
-  narrowRoadUp: {fileID: 0}
-  narrowRoadDown: {fileID: 0}
-  roadWorks: {fileID: 0}
+  narrowRoadUp: {fileID: 114789559680927314, guid: fabaf767e829fcf42b8487dca9f3e67c,
+    type: 3}
+  narrowRoadDown: {fileID: 114789559680927314, guid: fabaf767e829fcf42b8487dca9f3e67c,
+    type: 3}
+  roadWorks: {fileID: 9003672002281908655, guid: 5c5899e4372f4bc45b2edb6b93874d87,
+    type: 3}
   minCooldownBetweenObstacles: 2
   maxCooldownBetweenObstacles: 8
 --- !u!1 &1232099745
