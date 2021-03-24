@@ -3,40 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChodnikManager : MonoBehaviour
-{
-    public Transform detailParent;
-    public GameObject[] details;
+public class ChodnikManager : MonoBehaviour{
 
-    public float minCooldownBetweenDetails = 1f;
-    public float maxCooldownBetweenDetails = 6f;
-    private float _cooldown;
+	[SerializeField] private GameManager gameManager;
+	
+	public Transform detailParent;
+	public GameObject[] details;
 
-    private void Start()
-    {
-        _cooldown = 10f;
-    }
+	public float minCooldownBetweenDetails = 1f;
+	public float maxCooldownBetweenDetails = 6f;
+	private float _cooldown;
 
-    private void Update()
-    {
-        if (_cooldown > 0f)
-        {
-            _cooldown -= Time.deltaTime;
-        }
-        else
-        {
-            _cooldown = UnityEngine.Random.Range(minCooldownBetweenDetails, maxCooldownBetweenDetails);
+	private void Start(){
+		_cooldown = 10f;
+	}
 
-            if (GameManager.instance.inGame)
-            {
-                SpawnRandomDetail();
-            }
-        }
-    }
+	private void Update(){
+		if(_cooldown > 0f){
+			_cooldown -= Time.deltaTime;
+		} else{
+			_cooldown = UnityEngine.Random.Range(minCooldownBetweenDetails, 
+				maxCooldownBetweenDetails);
 
-    private void SpawnRandomDetail()
-    {
-        int d = UnityEngine.Random.Range(0, details.Length);
-        GameObject detail = Instantiate(details[d], new Vector3(Screen.width + 100, 25, 0), Quaternion.identity, detailParent);
-    }
+			if(gameManager.InGame){
+				SpawnRandomDetail();
+			}
+		}
+	}
+
+	private void SpawnRandomDetail(){
+		var random = UnityEngine.Random.Range(0, details.Length);
+		var detail = Instantiate(details[random], 
+			new Vector3(Screen.width + 100, 25, 0), 
+			Quaternion.identity, detailParent);
+	}
 }

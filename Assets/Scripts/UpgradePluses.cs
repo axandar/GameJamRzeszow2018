@@ -3,60 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradePluses : MonoBehaviour
-{
-    public int upgradeType = 0;
-    public int upgradeLvl = 0;
+public class UpgradePluses : MonoBehaviour{
 
-    public Image[] pluses;
+	[SerializeField] private UpgradeManager upgradeManager;
+	
+	public int upgradeType;
+	public int upgradeLvl;
 
-    public void OnEnable()
-    {
-        switch (upgradeType)
-        {
-            case 0:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelGolabki;
-                break;
+	public Image[] pluses;
 
-            case 1:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelGrochowka;
-                break;
+	public void OnEnable(){
+		switch(upgradeType){
+			case 0:
+				upgradeLvl = upgradeManager.upgradeLevelGolabki;
+				break;
 
-            case 2:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelBigos;
-                break;
+			case 1:
+				upgradeLvl = upgradeManager.upgradeLevelGrochowka;
+				break;
 
-            case 3:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelSchabowy;
-                break;
+			case 2:
+				upgradeLvl = upgradeManager.upgradeLevelBigos;
+				break;
 
-            case 4:
-                upgradeLvl = UpgradeManager.instance.upgradeLivesLevel;
-                break;
+			case 3:
+				upgradeLvl = upgradeManager.upgradeLevelSchabowy;
+				break;
 
-            case 5:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelLazanki;
-                break;
+			case 4:
+				upgradeLvl = upgradeManager.upgradeLivesLevel;
+				break;
 
-            case 6:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelParowki;
-                break;
+			case 5:
+				upgradeLvl = upgradeManager.upgradeLevelLazanki;
+				break;
 
-            case 7:
-                upgradeLvl = UpgradeManager.instance.upgradeLevelMeksyk;
-                break;
-        }
+			case 6:
+				upgradeLvl = upgradeManager.upgradeLevelParowki;
+				break;
 
-        for (int i = 0; i < pluses.Length; i++)
-        {
-            if (upgradeLvl >= i)
-            {
-                pluses[i].enabled = true;
-            }
-            else
-            {
-                pluses[i].enabled = false;
-            }
-        }
-    }
+			case 7:
+				upgradeLvl = upgradeManager.upgradeLevelMeksyk;
+				break;
+		}
+
+		for(var i = 0; i < pluses.Length; i++){
+			pluses[i].enabled = upgradeLvl >= i;
+		}
+	}
 }

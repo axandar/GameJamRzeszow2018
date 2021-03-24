@@ -2,83 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeUi : MonoBehaviour
-{
-    public void BigosUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelBigos++;
-        }
-        Reload();
-    }
+public class UpgradeUi : MonoBehaviour{
 
-    public void GolabkiUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelGolabki++;
-        }
-        Reload();
-    }
+	[SerializeField] private GameManager gameManager;
+	
+	public void BigosUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelBigos++;
+		}
 
-    public void GrochowaUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelGrochowka++;
-        }
-        Reload();
-    }
+		Reload();
+	}
 
-    public void LazankiUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelLazanki++;
-        }
-        Reload();
-    }
+	public void GolabkiUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelGolabki++;
+		}
 
-    public void MeksykUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelMeksyk++;
-        }
-        Reload();
-    }
+		Reload();
+	}
 
-    public void ParowkiUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelParowki++;
-        }
-        Reload();
-    }
+	public void GrochowaUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelGrochowka++;
+		}
 
-    public void SchabowyUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLevelSchabowy++;
-        }
-        Reload();
-    }
+		Reload();
+	}
 
-    public void LivesUpgrade()
-    {
-        if (UpgradeManager.instance.RemoveCoins(10))
-        {
-            UpgradeManager.instance.upgradeLivesLevel++;
-        }
-        Reload();
-    }
+	public void LazankiUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelLazanki++;
+		}
 
-    public void Reload()
-    {
-        FindObjectOfType<MenuScript>().Menu();
-        FindObjectOfType<MenuScript>().Upgrades();
-    }
+		Reload();
+	}
+
+	public void MeksykUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelMeksyk++;
+		}
+
+		Reload();
+	}
+
+	public void ParowkiUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelParowki++;
+		}
+
+		Reload();
+	}
+
+	public void SchabowyUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLevelSchabowy++;
+		}
+
+		Reload();
+	}
+
+	public void LivesUpgrade(){
+		if(gameManager.RemoveCoins(10)){
+			gameManager.UpgradeManager.upgradeLivesLevel++;
+		}
+
+		Reload();
+	}
+
+	public void Reload(){
+		FindObjectOfType<MenuScript>().Menu();
+		FindObjectOfType<MenuScript>().Upgrades();
+	}
 }

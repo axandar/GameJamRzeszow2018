@@ -1,39 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Enemy;
+using Player;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
-{
-    public float speed = 5f;
-    private Rigidbody2D _rb;
+public class Obstacle : MonoBehaviour{
+	[SerializeField] private float speed = 5f;
+	private Rigidbody2D _rb;
+	private PlayerCar _playerCar;
 
-    private void Awake()
-    {
-        _rb = _rb ?? GetComponent<Rigidbody2D>();
-    }
+	private void Start(){
+		_rb = GetComponent<Rigidbody2D>();
+	}
 
-    // Update is called once per frame
-    private void Update()
-    {
-        float roadSpeed = FindObjectOfType<MovingRoad>()._currSpeed;
+	public void Initialize(PlayerCar playerCar){
+		_playerCar = playerCar;
+	}
 
-        _rb.MovePosition(new Vector3(
-            transform.position.x - speed * Time.deltaTime * speed, 
-            transform.position.y, 0f));
-        if (transform.position.x < -100f)
-        {
-            Destroy(gameObject);
-        } 
-    }
-
-    private void OnTriggerEnter2D(Collider2D col){
-        int layer = col.gameObject.layer;
-        if (layer == LayerMask.NameToLayer("Player")){
-            col.gameObject.GetComponent<PlayerCar>().TakeHeart(1);
-            col.gameObject.GetComponent<PlayerCar>().Immortal();
-        }else if(layer == LayerMask.NameToLayer("Enemy")){
-            col.GetComponent<EnemyControler>().Kill();
-            Destroy(gameObject);
-        }
-    }
+	// Update is called once per frame
+	private void Update(){
+		var position = transform.position;
+		_rb.MovePosition(new Vector3(position.x - speed * Time.deltaTime * speed,
+			position.y, 0f));
+		if(transform.position.x < -100f){
+			Destroy(gameObject);
+		}
+	}
+	
+	private void OnTriggerEnter2D(Collider2D col){
+		var layer = col.gameObject.layer;
+		if(layer == LayerMask.NameToLayer("Player")){
+			_playerCar.TakeHeart(1);
+			_playerCar.Immortal();
+			Destroy(gameObject);
+		} else if(layer == LayerMask.NameToLayer("Enemy")){
+			col.GetComponent<EnemyController>().Kill();
+			Destroy(gameObject);
+		}
+	}
 }

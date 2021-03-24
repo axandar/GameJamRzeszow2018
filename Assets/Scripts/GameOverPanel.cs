@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverPanel : MonoBehaviour
-{
-    public void Restart()
-    {
-        GameManager.instance.inGame = false;
-        GameManager.instance.timer = 120f;
-        SceneManager.LoadSceneAsync("RoadGame");
-    }
+public class GameOverPanel : MonoBehaviour{
 
-    public void ToMenu()
-    {
-        SceneManager.LoadSceneAsync("MainMenu");
-    }
+	[SerializeField] private GameManager gameManager;
+	
+	public void Restart(){
+		gameManager.InGame = false;
+		SceneManager.LoadSceneAsync("RoadGame");
+	}
+
+	public void ToMenu(){
+		SceneManager.LoadSceneAsync("MainMenu");
+	}
 }
